@@ -1,0 +1,4 @@
+name = "Kepler"
+uuid = "459d104a-0eb7-491b-905e-d1a4d4db1876"
+authors = ["Jean-Baptiste Caillau <jean-baptiste.caillau@univ-cotedazur.fr>"]
+version = "0.1.0"
