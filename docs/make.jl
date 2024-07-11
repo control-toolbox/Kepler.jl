@@ -6,7 +6,7 @@ makedocs(;
     format = Documenter.HTML(prettyurls = false),
     pages = [
         "Introduction" => "index.md",
-        #"Kepler" => "kepler.md",
+        "Kepler" => "application-kepler.md",
     ],
     checkdocs=:none,
 )
