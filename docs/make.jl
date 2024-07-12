@@ -2,16 +2,15 @@ using Documenter
 
 makedocs(;
     warnonly = [:cross_references, :autodocs_block],
-    sitename = "Kepler.jl",
+    sitename = "kepler",
     format = Documenter.HTML(prettyurls = false),
     pages = [
-        "Introduction" => "index.md",
-        "Kepler" => "application-kepler.md",
+        "Orbit transfer" => "index.md",
     ],
     checkdocs=:none,
 )
 
 deploydocs(
-    repo = "github.com/control-toolbox/Kepler.jl.git",
+    repo = "github.com/control-toolbox/kepler.git",
     devbranch = "main"
 )
