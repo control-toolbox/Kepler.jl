@@ -1,16 +1,16 @@
-# Kepler.jl
+# kepler
 
-[ci-img]: https://github.com/control-toolbox/Kepler.jl/actions/workflows/CI.yml/badge.svg?branch=main
-[ci-url]: https://github.com/control-toolbox/Kepler.jl/actions/workflows/CI.yml?query=branch%3Amain
+[ci-img]: https://github.com/control-toolbox/kepler/actions/workflows/CI.yml/badge.svg?branch=main
+[ci-url]: https://github.com/control-toolbox/kepler/actions/workflows/CI.yml?query=branch%3Amain
 
-[co-img]: https://codecov.io/gh/control-toolbox/Kepler.jl/branch/main/graph/badge.svg?token=YM5YQQUSO3
-[co-url]: https://codecov.io/gh/control-toolbox/Kepler.jl
+[co-img]: https://codecov.io/gh/control-toolbox/kepler/branch/main/graph/badge.svg?token=YM5YQQUSO3
+[co-url]: https://codecov.io/gh/control-toolbox/kepler
 
 [doc-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
-[doc-dev-url]: https://control-toolbox.org/Kepler.jl/dev/
+[doc-dev-url]: https://control-toolbox.org/kepler/dev/
 
 [doc-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[doc-stable-url]: https://control-toolbox.org/Kepler.jl/stable/
+[doc-stable-url]: https://control-toolbox.org/kepler/stable/
 
 Kepler application.
 
