@@ -9,7 +9,7 @@ using OrdinaryDiffEq
 using Plots
 using MINPACK
 using ForwardDiff
-using LinearAlgebra</code></pre><h2 id="Problem-definition"><a class="docs-heading-anchor" href="#Problem-definition">Problem definition</a><a id="Problem-definition-1"></a><a class="docs-heading-anchor-permalink" href="#Problem-definition" title="Permalink"></a></h2><pre><code class="language-julia hljs">Tmax = 60                                  # Maximum thrust (Newtons)
+using LinearAlgebra</code></pre><h2 id="Problem-definition"><a class="docs-heading-anchor" href="#Problem-definition">Problem definition</a><a id="Problem-definition-1"></a><a class="docs-heading-anchor-permalink" href="#Problem-definition" title="Permalink"></a></h2><pre><code class="language-julia hljs">Tmax = 60                                  # Maximum thrust in Newtons
 cTmax = 3600^2 / 1e6; T = Tmax * cTmax     # Conversion from Newtons to kg x Mm / h²
 mass0 = 1500                               # Initial mass of the spacecraft
 β = 1.42e-02                               # Engine specific impulsion
@@ -128,7 +128,7 @@ end</code></pre><pre class="documenter-example-output"><code class="nohighlight 
 │</span><span class="sgr32"><span class="sgr1">   V    │   V    │    V     │    V     │     V     │     V      │      V      │
 ╰────────┴────────┴──────────┴──────────┴───────────┴────────────┴─────────────╯
 </span></span></code></pre><pre><code class="language-julia hljs">nlp_sol = OptimalControl.solve(ocp; init=nlp_init, grid_size=100)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Method = (:direct, :adnlp, :ipopt)
-This is Ipopt version 3.14.14, running with linear solver MUMPS 5.6.2.
+This is Ipopt version 3.14.16, running with linear solver MUMPS 5.7.3.
 
 Number of nonzeros in equality constraint Jacobian...:    11011
 Number of nonzeros in inequality constraint Jacobian.:      303
@@ -189,11 +189,11 @@ Number of inequality constraint evaluations          = 34
 Number of equality constraint Jacobian evaluations   = 23
 Number of inequality constraint Jacobian evaluations = 23
 Number of Lagrangian Hessian evaluations             = 22
-Total seconds in IPOPT                               = 3.580
+Total seconds in IPOPT                               = 3.693
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = nlp_sol.variable
 p0 = nlp_sol.costate(0)
-plot(nlp_sol)</code></pre><img src="index-14900766.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-7af69748.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -223,16 +223,16 @@ bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code><
 ------   --------------   --------------   --------------
 ┌ Warning: Using arrays or dicts to store parameters of different types can hurt performance.
 │ Consider using tuples instead.
-└ @ SciMLBase ~/.julia/packages/SciMLBase/n3SyK/src/performance_warnings.jl:33
-     1     1.441506e+00     0.000000e+00         9.760911
-     2     7.828938e-02     5.822027e-05        27.718184
-     3     1.805662e-02     1.793354e-05         0.017397
-     4     4.039662e-03     6.128462e-07         0.006595
-     5     1.137946e-04     1.107466e-08         0.006160
-     6     6.538003e-05     1.358877e-10         0.006767
-     7     6.246167e-06     4.488880e-12         0.018523
-     8     3.526132e-08     5.344909e-14         0.006265
-     9     4.096776e-10     1.856086e-18         0.005957
+└ @ SciMLBase ~/.julia/packages/SciMLBase/vhP5T/src/performance_warnings.jl:33
+     1     1.441506e+00     0.000000e+00         9.429255
+     2     7.828938e-02     5.822027e-05        28.795885
+     3     1.805662e-02     1.793354e-05         0.007304
+     4     4.039662e-03     6.128462e-07         0.006516
+     5     1.137946e-04     1.107466e-08         0.008642
+     6     6.538003e-05     1.358877e-10         0.024568
+     7     6.246167e-06     4.488880e-12         0.006674
+     8     3.526132e-08     5.344909e-14         0.006531
+     9     4.096776e-10     1.856086e-18         0.008157
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [14.796404502710015, -0.01616443538965088, -0.905096220293085, -0.33067877687115316, -0.0964829017120587, 0.035148110578365595, 0.24626560776262577]
@@ -240,7 +240,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 37.546796 seconds
+ * Total time: 38.293577 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -265,22 +265,22 @@ bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code><
 ------   --------------   --------------   --------------
 ┌ Warning: Using arrays or dicts to store parameters of different types can hurt performance.
 │ Consider using tuples instead.
-└ @ SciMLBase ~/.julia/packages/SciMLBase/n3SyK/src/performance_warnings.jl:33
-     1     1.073125e+00     0.000000e+00         3.693594
-     2     1.431628e-01     1.222060e+01         5.696691
-     3     1.090278e-01     1.104508e+01         0.271492
-     4     1.847701e-02     2.971601e+00         0.279311
-     5     1.996379e-02     4.468587e-01         0.285430
-     6     8.607699e-03     2.181926e-02         0.287853
-     7     2.826057e-03     2.618562e-03         0.283973
-     8     1.241454e-03     7.993855e-05         0.770996
-     9     1.554905e-03     6.603507e-05         0.565602
-    10     7.597806e-05     2.809497e-05         0.216621
-    11     4.205713e-05     1.773398e-07         0.231102
-    12     7.673290e-06     3.854243e-07         0.226230
-    13     5.152181e-07     7.292576e-09         0.231711
-    14     5.475453e-08     4.566452e-11         0.230893
-    15     1.141985e-08     8.450214e-13         0.239888
+└ @ SciMLBase ~/.julia/packages/SciMLBase/vhP5T/src/performance_warnings.jl:33
+     1     1.073125e+00     0.000000e+00         3.567376
+     2     1.431628e-01     1.222060e+01         6.053044
+     3     1.090278e-01     1.104508e+01         0.280408
+     4     1.847701e-02     2.971601e+00         0.288915
+     5     1.996379e-02     4.468587e-01         0.312875
+     6     8.607699e-03     2.181926e-02         0.292945
+     7     2.826057e-03     2.618562e-03         0.295181
+     8     1.241454e-03     7.993855e-05         0.270822
+     9     1.554905e-03     6.603507e-05         0.305667
+    10     7.597806e-05     2.809497e-05         0.310008
+    11     4.205713e-05     1.773398e-07         0.812621
+    12     7.673290e-06     3.854243e-07         0.631013
+    13     5.152181e-07     7.292576e-09         0.242448
+    14     5.475453e-08     4.566452e-11         0.237593
+    15     1.141985e-08     8.450214e-13         0.243242
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
@@ -288,7 +288,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 13.511492 seconds
+ * Total time: 14.144255 seconds
  * Function Calls: 15
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
@@ -312,4 +312,4 @@ q3 = @. 2 * P * Z / (C * w)
 plt1 = plot3d(1; xlim = (-60, 60), ylim = (-60, 60), zlim = (-5, 5), title = &quot;Orbit transfer&quot;, legend=false)
 @gif for i = 1:N
     push!(plt1, q1[i], q2[i], q3[i])
-end every N ÷ min(N, 100)</code></pre><img src="index-68fa403c.gif" alt="Example block output"/><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.5.0 on <span class="colophon-date" title="Monday 22 July 2024 17:20">Monday 22 July 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+end every N ÷ min(N, 100)</code></pre><img src="index-68fa403c.gif" alt="Example block output"/><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.5.0 on <span class="colophon-date" title="Thursday 1 August 2024 22:02">Thursday 1 August 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
