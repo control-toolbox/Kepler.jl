@@ -35,7 +35,7 @@ using LinearAlgebra
 ## Problem definition
 
 ```@example main
-Tmax = 60                                  # Maximum thrust (Newtons)
+Tmax = 60                                  # Maximum thrust in Newtons
 cTmax = 3600^2 / 1e6; T = Tmax * cTmax     # Conversion from Newtons to kg x Mm / h²
 mass0 = 1500                               # Initial mass of the spacecraft
 β = 1.42e-02                               # Engine specific impulsion
