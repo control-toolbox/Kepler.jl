@@ -1,4 +1,4 @@
 # test_default
 function test_default()
-     @test true
+     @test Kepler.greet() isa Nothing
 end
