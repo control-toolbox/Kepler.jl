@@ -1,4 +1,5 @@
 using Test
+using Kepler
 
 #
 @testset verbose = true showtiming = true "Base" begin
