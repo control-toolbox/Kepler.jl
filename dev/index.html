@@ -189,11 +189,11 @@ Number of inequality constraint evaluations          = 34
 Number of equality constraint Jacobian evaluations   = 23
 Number of inequality constraint Jacobian evaluations = 23
 Number of Lagrangian Hessian evaluations             = 22
-Total seconds in IPOPT                               = 3.724
+Total seconds in IPOPT                               = 3.931
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = nlp_sol.variable
 p0 = nlp_sol.costate(0)
-plot(nlp_sol)</code></pre><img src="index-df3ead1b.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-757dd84e.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -224,15 +224,15 @@ bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code><
 ┌ Warning: Using arrays or dicts to store parameters of different types can hurt performance.
 │ Consider using tuples instead.
 └ @ SciMLBase ~/.julia/packages/SciMLBase/HReyK/src/performance_warnings.jl:33
-     1     1.441506e+00     0.000000e+00        14.446930
-     2     7.828938e-02     5.822027e-05        28.903180
-     3     1.805662e-02     1.793354e-05         0.007084
-     4     4.039661e-03     6.128462e-07         0.006460
-     5     1.137954e-04     1.107466e-08         0.009505
-     6     6.538053e-05     1.358876e-10         0.025148
-     7     6.246315e-06     4.488853e-12         0.006456
-     8     3.554230e-08     5.345012e-14         0.006360
-     9     4.927756e-10     1.855724e-18         0.007833
+     1     1.441506e+00     0.000000e+00        14.064432
+     2     7.828938e-02     5.822027e-05        29.774480
+     3     1.805662e-02     1.793354e-05         0.006580
+     4     4.039661e-03     6.128462e-07         0.007401
+     5     1.137954e-04     1.107466e-08         0.019149
+     6     6.538053e-05     1.358876e-10         0.006863
+     7     6.246315e-06     4.488853e-12         0.006366
+     8     3.554230e-08     5.345012e-14         0.011994
+     9     4.927756e-10     1.855724e-18         0.022105
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [14.79640450271002, -0.016164435389650893, -0.9050962202930852, -0.3306787768711527, -0.09648290171205823, 0.03514811057836549, 0.24626560776262565]
@@ -240,7 +240,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 43.418995 seconds
+ * Total time: 43.919461 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -266,21 +266,21 @@ bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code><
 ┌ Warning: Using arrays or dicts to store parameters of different types can hurt performance.
 │ Consider using tuples instead.
 └ @ SciMLBase ~/.julia/packages/SciMLBase/HReyK/src/performance_warnings.jl:33
-     1     1.073125e+00     0.000000e+00         2.865683
-     2     1.431628e-01     1.222060e+01         5.621275
-     3     1.090278e-01     1.104508e+01         0.271816
-     4     1.847701e-02     2.971601e+00         0.286598
-     5     1.996379e-02     4.468587e-01         0.286318
-     6     8.607699e-03     2.181926e-02         0.300434
-     7     2.826057e-03     2.618562e-03         0.287968
-     8     1.241454e-03     7.993855e-05         0.280267
-     9     1.554905e-03     6.603507e-05         0.296480
-    10     7.597806e-05     2.809497e-05         0.281770
-    11     4.205713e-05     1.773398e-07         0.297337
-    12     7.673290e-06     3.854243e-07         0.374259
-    13     5.152181e-07     7.292576e-09         1.039887
-    14     5.475453e-08     4.566452e-11         0.231290
-    15     1.141985e-08     8.450214e-13         0.238845
+     1     1.073125e+00     0.000000e+00         2.968993
+     2     1.431628e-01     1.222060e+01         5.951801
+     3     1.090278e-01     1.104508e+01         0.277848
+     4     1.847701e-02     2.971601e+00         0.284430
+     5     1.996379e-02     4.468587e-01         0.304686
+     6     8.607699e-03     2.181926e-02         0.280236
+     7     2.826057e-03     2.618562e-03         0.292439
+     8     1.241454e-03     7.993855e-05         0.292254
+     9     1.554905e-03     6.603507e-05         0.290843
+    10     7.597806e-05     2.809497e-05         0.295611
+    11     4.205713e-05     1.773398e-07         0.283301
+    12     7.673290e-06     3.854243e-07         0.298250
+    13     5.152181e-07     7.292576e-09         1.103399
+    14     5.475453e-08     4.566452e-11         0.217390
+    15     1.141985e-08     8.450214e-13         0.225866
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
@@ -288,7 +288,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 12.960320 seconds
+ * Total time: 13.367442 seconds
  * Function Calls: 15
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
