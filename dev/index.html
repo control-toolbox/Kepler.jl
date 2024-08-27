@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Orbit transfer · kepler</title><meta name="title" content="Orbit transfer · kepler"/><meta property="og:title" content="Orbit transfer · kepler"/><meta property="twitter:title" content="Orbit transfer · kepler"/><meta name="description" content="Documentation for kepler."/><meta property="og:description" content="Documentation for kepler."/><meta property="twitter:description" content="Documentation for kepler."/><script data-outdated-warner src="assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="assets/documenter.js"></script><script src="search_index.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="assets/themeswap.js"></script><link href="https://control-toolbox.org/assets/css/documentation.css" rel="stylesheet" type="text/css"/><script src="https://control-toolbox.org/assets/js/documentation.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="index.html">kepler</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li class="is-active"><a class="tocitem" href="index.html">Orbit transfer</a><ul class="internal"><li><a class="tocitem" href="#Introduction"><span>Introduction</span></a></li><li><a class="tocitem" href="#Problem-definition"><span>Problem definition</span></a></li><li><a class="tocitem" href="#Direct-solve"><span>Direct solve</span></a></li><li><a class="tocitem" href="#Shooting-(1/2),-Tmax-60-Newtons"><span>Shooting (1/2), Tmax = 60 Newtons</span></a></li><li><a class="tocitem" href="#Shooting-(2/2),-Tmax-0.7-Newtons"><span>Shooting (2/2), Tmax = 0.7 Newtons</span></a></li><li><a class="tocitem" href="#Plots"><span>Plots</span></a></li><li><a class="tocitem" href="#References"><span>References</span></a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href="index.html">Orbit transfer</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="index.html">Orbit transfer</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/control-toolbox/kepler" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/control-toolbox/kepler/blob/main/docs/src/index.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="orbit"><a class="docs-heading-anchor" href="#orbit">Minimum time orbit transfer</a><a id="orbit-1"></a><a class="docs-heading-anchor-permalink" href="#orbit" title="Permalink"></a></h1><h2 id="Introduction"><a class="docs-heading-anchor" href="#Introduction">Introduction</a><a id="Introduction-1"></a><a class="docs-heading-anchor-permalink" href="#Introduction" title="Permalink"></a></h2><img src="./assets/cnes-tas.jpg" style="display: block; margin: 0 auto 20px auto;" width="400px"><p>Minimum time control of the Kepler equation (CNES / TAS / Inria / CNRS collaboration, check <sup class="footnote-reference"><a id="citeref-1" href="#footnote-1">[1]</a></sup> and <sup class="footnote-reference"><a id="citeref-2" href="#footnote-2">[2]</a></sup>):</p><p class="math-container">\[\begin{cases}
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Orbit transfer · kepler</title><meta name="title" content="Orbit transfer · kepler"/><meta property="og:title" content="Orbit transfer · kepler"/><meta property="twitter:title" content="Orbit transfer · kepler"/><meta name="description" content="Documentation for kepler."/><meta property="og:description" content="Documentation for kepler."/><meta property="twitter:description" content="Documentation for kepler."/><script data-outdated-warner src="assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="assets/documenter.js"></script><script src="search_index.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="assets/themeswap.js"></script><link href="https://control-toolbox.org/assets/css/documentation.css" rel="stylesheet" type="text/css"/><script src="https://control-toolbox.org/assets/js/documentation.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="index.html">kepler</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li class="is-active"><a class="tocitem" href="index.html">Orbit transfer</a><ul class="internal"><li><a class="tocitem" href="#Introduction"><span>Introduction</span></a></li><li><a class="tocitem" href="#Problem-definition"><span>Problem definition</span></a></li><li><a class="tocitem" href="#Direct-solve"><span>Direct solve</span></a></li><li><a class="tocitem" href="#Shooting-(1/2),-Tmax-60-Newtons"><span>Shooting (1/2), Tmax = 60 Newtons</span></a></li><li><a class="tocitem" href="#Shooting-(2/2),-Tmax-0.7-Newtons"><span>Shooting (2/2), Tmax = 0.7 Newtons</span></a></li><li><a class="tocitem" href="#Plots"><span>Plots</span></a></li><li><a class="tocitem" href="#Dependencies"><span>Dependencies</span></a></li><li><a class="tocitem" href="#References"><span>References</span></a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href="index.html">Orbit transfer</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="index.html">Orbit transfer</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/control-toolbox/kepler" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/control-toolbox/kepler/blob/main/docs/src/index.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="orbit"><a class="docs-heading-anchor" href="#orbit">Minimum time orbit transfer</a><a id="orbit-1"></a><a class="docs-heading-anchor-permalink" href="#orbit" title="Permalink"></a></h1><h2 id="Introduction"><a class="docs-heading-anchor" href="#Introduction">Introduction</a><a id="Introduction-1"></a><a class="docs-heading-anchor-permalink" href="#Introduction" title="Permalink"></a></h2><img src="./assets/cnes-tas.jpg" style="display: block; margin: 0 auto 20px auto;" width="400px"><p>Minimum time control of the Kepler equation (CNES / TAS / Inria / CNRS collaboration, check <sup class="footnote-reference"><a id="citeref-1" href="#footnote-1">[1]</a></sup> and <sup class="footnote-reference"><a id="citeref-2" href="#footnote-2">[2]</a></sup>):</p><p class="math-container">\[\begin{cases}
   t_f \to \min,\\
   \ddot{q} = -\mu\frac{q}{|q|^3} + \frac{u}{m}\,,\quad t \in [0,t_f],\\
   \dot{m} = -\beta|u|,\quad |u| \leq T_{\mathrm{max}}.
@@ -94,8 +94,7 @@ nlp_init = (state=x, control=u, variable=tf) # Initial guess for the NLP
     ẋ(t) == F0(x(t)) + T / mass * (u₁(t) * F1(x(t)) + u₂(t) * F2(x(t)) + u₃(t) * F3(x(t)))
     u₁(t)^2 + u₂(t)^2 + u₃(t)^2 ≤ 1
     tf → min
-end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">
-<span class="sgr1">The (non autonomous) optimal control problem is given by:</span>
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr1">The (non autonomous) optimal control problem is given by:</span>
 
     tf ∈ R, variable
     t ∈ [0, tf], time
@@ -127,8 +126,7 @@ end</code></pre><pre class="documenter-example-output"><code class="nohighlight 
 ├────────┼────────┼──────────┼──────────┼───────────┼────────────┼─────────────┤
 │</span><span class="sgr32"><span class="sgr1">   V    │   V    │    V     │    V     │     V     │     V      │      V      │
 ╰────────┴────────┴──────────┴──────────┴───────────┴────────────┴─────────────╯
-</span></span></code></pre><pre><code class="language-julia hljs">nlp_sol = OptimalControl.solve(ocp; init=nlp_init, grid_size=100)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Method = (:direct, :adnlp, :ipopt)
-This is Ipopt version 3.14.16, running with linear solver MUMPS 5.7.3.
+</span></span></code></pre><pre><code class="language-julia hljs">nlp_sol = OptimalControl.solve(ocp; init=nlp_init, grid_size=100)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">This is Ipopt version 3.14.16, running with linear solver MUMPS 5.7.3.
 
 Number of nonzeros in equality constraint Jacobian...:    11011
 Number of nonzeros in inequality constraint Jacobian.:      303
@@ -169,17 +167,17 @@ iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
 iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
   20  1.4796807e+01 5.17e-04 5.95e-05  -5.1 6.84e-02    -  1.00e+00 1.00e+00h  1
   21  1.4796405e+01 1.26e-07 1.37e-08 -11.0 1.93e-03    -  1.00e+00 1.00e+00h  1
-  22  1.4796405e+01 7.11e-15 1.68e-14 -11.0 2.11e-06    -  1.00e+00 1.00e+00h  1
+  22  1.4796405e+01 1.42e-14 1.53e-14 -11.0 2.11e-06    -  1.00e+00 1.00e+00h  1
 
 Number of Iterations....: 22
 
                                    (scaled)                 (unscaled)
-Objective...............:   1.4796404502710020e+01    1.4796404502710020e+01
-Dual infeasibility......:   1.6764367671839864e-14    1.6764367671839864e-14
-Constraint violation....:   7.1054273576010019e-15    7.1054273576010019e-15
+Objective...............:   1.4796404502710015e+01    1.4796404502710015e+01
+Dual infeasibility......:   1.5265566588595902e-14    1.5265566588595902e-14
+Constraint violation....:   1.4210854715202004e-14    1.4210854715202004e-14
 Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
-Complementarity.........:   1.0004070416573200e-11    1.0004070416573200e-11
-Overall NLP error.......:   1.0004070416573200e-11    1.0004070416573200e-11
+Complementarity.........:   1.0004070416573195e-11    1.0004070416573195e-11
+Overall NLP error.......:   1.0004070416573195e-11    1.0004070416573195e-11
 
 
 Number of objective function evaluations             = 34
@@ -189,11 +187,11 @@ Number of inequality constraint evaluations          = 34
 Number of equality constraint Jacobian evaluations   = 23
 Number of inequality constraint Jacobian evaluations = 23
 Number of Lagrangian Hessian evaluations             = 22
-Total seconds in IPOPT                               = 3.840
+Total seconds in IPOPT                               = 3.859
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = nlp_sol.variable
 p0 = nlp_sol.costate(0)
-plot(nlp_sol)</code></pre><img src="index-ea376407.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-00a05db4.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -221,26 +219,23 @@ shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
 jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-┌ Warning: Using arrays or dicts to store parameters of different types can hurt performance.
-│ Consider using tuples instead.
-└ @ SciMLBase ~/.julia/packages/SciMLBase/HReyK/src/performance_warnings.jl:33
-     1     1.441506e+00     0.000000e+00        13.663107
-     2     7.828938e-02     5.822027e-05        29.294731
-     3     1.805662e-02     1.793354e-05         0.007548
-     4     4.039661e-03     6.128462e-07         0.006533
-     5     1.137954e-04     1.107466e-08         0.010689
-     6     6.538053e-05     1.358876e-10         0.023944
-     7     6.246315e-06     4.488853e-12         0.006519
-     8     3.554230e-08     5.345012e-14         0.006476
-     9     4.927756e-10     1.855724e-18         0.009171
+     1     1.441506e+00     0.000000e+00        10.805563
+     2     7.828938e-02     5.822027e-05        12.220199
+     3     1.805662e-02     1.793354e-05         0.019772
+     4     4.039662e-03     6.128462e-07         0.009140
+     5     1.137949e-04     1.107466e-08         0.017235
+     6     6.538025e-05     1.358877e-10         0.022250
+     7     6.246359e-06     4.488870e-12         0.008841
+     8     3.534277e-08     5.344945e-14         0.020385
+     9     3.607425e-10     1.853529e-18         0.008544
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
- * Starting Point: [14.79640450271002, -0.016164435389650893, -0.9050962202930852, -0.3306787768711527, -0.09648290171205823, 0.03514811057836549, 0.24626560776262565]
- * Zero: [14.80036435464787, -0.016189714920434792, -0.9084889547983586, -0.32525985897623066, -0.09447217091072316, 0.03432296284883744, 0.24184432890536]
+ * Starting Point: [14.796404502710015, -0.01616443538965085, -0.9050962202930849, -0.33067877687115305, -0.09648290171205924, 0.03514811057836573, 0.2462656077626256]
+ * Zero: [14.80036435466474, -0.016189714921626987, -0.9084889547974427, -0.32525985898304344, -0.09447217088704477, 0.034322962835424624, 0.24184432891069796]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 43.028761 seconds
+ * Total time: 23.131963 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -263,32 +258,29 @@ p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-┌ Warning: Using arrays or dicts to store parameters of different types can hurt performance.
-│ Consider using tuples instead.
-└ @ SciMLBase ~/.julia/packages/SciMLBase/HReyK/src/performance_warnings.jl:33
-     1     1.073125e+00     0.000000e+00         2.928920
-     2     1.431628e-01     1.222060e+01         5.986447
-     3     1.090278e-01     1.104508e+01         0.273893
-     4     1.847701e-02     2.971601e+00         0.284616
-     5     1.996379e-02     4.468587e-01         0.294310
-     6     8.607699e-03     2.181926e-02         0.293886
-     7     2.826057e-03     2.618562e-03         0.295274
-     8     1.241454e-03     7.993855e-05         0.298244
-     9     1.554905e-03     6.603507e-05         0.302489
-    10     7.597806e-05     2.809497e-05         0.299097
-    11     4.205713e-05     1.773398e-07         0.300096
-    12     7.673290e-06     3.854243e-07         0.375744
-    13     5.152181e-07     7.292576e-09         1.048534
-    14     5.475453e-08     4.566452e-11         0.228424
-    15     1.141985e-08     8.450214e-13         0.232040
+     1     1.073118e+00     0.000000e+00         3.692412
+     2     1.431619e-01     1.222060e+01         9.481142
+     3     1.090263e-01     1.104500e+01         0.263802
+     4     1.847681e-02     2.971575e+00         0.259807
+     5     1.996342e-02     4.468500e-01         0.256043
+     6     8.607891e-03     2.181855e-02         0.260442
+     7     2.826179e-03     2.618597e-03         0.232776
+     8     1.241800e-03     7.994152e-05         0.258497
+     9     1.554855e-03     6.600726e-05         0.268601
+    10     7.600283e-05     2.807880e-05         0.261774
+    11     4.206208e-05     1.772950e-07         0.259061
+    12     7.673255e-06     3.854864e-07         0.271350
+    13     5.197705e-07     7.297650e-09         0.256273
+    14     5.438044e-08     4.529607e-11         0.249924
+    15     1.587843e-08     5.299562e-13         0.275614
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
- * Zero: [1214.5922193012475, 0.0693340821853366, 0.5161929504563693, -0.00023165339991801053, -0.8536501202845479, 0.004363234350924166, -9.329025945490545e-5]
+ * Zero: [1214.5922197498583, 0.06933409679970054, 0.5161919907114219, -0.0002316694508574345, -0.8536506987915817, 0.004363237319529891, -9.327824976827161e-5]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 13.442100 seconds
+ * Total time: 16.547594 seconds
  * Function Calls: 15
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
@@ -312,4 +304,15 @@ q3 = @. 2 * P * Z / (C * w)
 plt1 = plot3d(1; xlim = (-60, 60), ylim = (-60, 60), zlim = (-5, 5), title = &quot;Orbit transfer&quot;, legend=false)
 @gif for i = 1:N
     push!(plt1, q1[i], q2[i], q3[i])
-end every N ÷ min(N, 100)</code></pre><img src="index-68fa403c.gif" alt="Example block output"/><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.6.0 on <span class="colophon-date" title="Monday 26 August 2024 16:48">Monday 26 August 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+end every N ÷ min(N, 100)</code></pre><img src="index-239c6c50.gif" alt="Example block output"/><h2 id="Dependencies"><a class="docs-heading-anchor" href="#Dependencies">Dependencies</a><a id="Dependencies-1"></a><a class="docs-heading-anchor-permalink" href="#Dependencies" title="Permalink"></a></h2><p>All the numerical simulations to generate this documentation are performed with  the following packages.</p><pre><code class="language-julia hljs">using Pkg
+Pkg.status()</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/kepler/kepler/docs/Project.toml`
+  [e30172f5] Documenter v1.6.0
+  [f6369f11] ForwardDiff v0.10.36
+  [459d104a] Kepler v0.1.3 `~/work/kepler/kepler`
+⌃ [4854310b] MINPACK v1.2.0
+  [f4238b75] NLPModelsIpopt v0.10.2
+  [5f98b655] OptimalControl v0.11.4
+  [1dea7af3] OrdinaryDiffEq v6.88.1
+  [91a5bcdd] Plots v1.40.7
+  [37e2e46d] LinearAlgebra
+Info Packages marked with ⌃ have new versions available and may be upgradable.</code></pre><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.6.0 on <span class="colophon-date" title="Tuesday 27 August 2024 07:58">Tuesday 27 August 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
