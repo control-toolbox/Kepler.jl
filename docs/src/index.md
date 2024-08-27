@@ -231,6 +231,16 @@ plt1 = plot3d(1; xlim = (-60, 60), ylim = (-60, 60), zlim = (-5, 5), title = "Or
 end every N ÷ min(N, 100) 
 ```
 
+## Dependencies
+
+All the numerical simulations to generate this documentation are performed with 
+the following packages.
+
+```@example
+using Pkg
+Pkg.status()
+```
+
 ## References
 
 [^1]: Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  *Discrete Contin. Dyn. Syst. Ser. B* **5** (2005), no. 4, 929-956.
