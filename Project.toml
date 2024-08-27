@@ -1,7 +1,7 @@
 name = "Kepler"
 uuid = "459d104a-0eb7-491b-905e-d1a4d4db1876"
 authors = ["Jean-Baptiste Caillau <jean-baptiste.caillau@univ-cotedazur.fr>"]
-version = "0.1.3"
+version = "0.1.5"
 
 [deps]
 ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
