@@ -5,18 +5,13 @@ makedocs(;
     sitename = "kepler",
     format = Documenter.HTML(
         prettyurls = false,
-        assets=[
+        assets = [
             asset("https://control-toolbox.org/assets/css/documentation.css"),
             asset("https://control-toolbox.org/assets/js/documentation.js"),
         ],
     ),
-    pages = [
-        "Orbit transfer" => "index.md",
-    ],
-    checkdocs=:none,
+    pages = ["Orbit transfer" => "index.md"],
+    checkdocs = :none,
 )
 
-deploydocs(
-    repo = "github.com/control-toolbox/kepler.git",
-    devbranch = "main"
-)
+deploydocs(repo = "github.com/control-toolbox/kepler.git", devbranch = "main")
