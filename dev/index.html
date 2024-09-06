@@ -13,28 +13,28 @@ using LinearAlgebra</code></pre><pre class="documenter-example-output"><code cla
 ERROR: Method overwriting is not permitted during Module precompilation. Use `__precompile__(false)` to opt-out of precompilation.
 WARNING: Method definition default_nlsolve(Nothing, Base.Val{true}, Any, SciMLBase.NonlinearProblem{uType, isinplace, P, F, K, PT} where PT where K where F where P where isinplace where uType) in module OrdinaryDiffEqCore at /home/runner/.julia/packages/OrdinaryDiffEqCore/rRqPh/src/initialize_dae.jl:123 overwritten in module OrdinaryDiffEqNonlinearSolve at /home/runner/.julia/packages/OrdinaryDiffEqNonlinearSolve/0gbhD/src/initialize_dae.jl:1.
 ERROR: Method overwriting is not permitted during Module precompilation. Use `__precompile__(false)` to opt-out of precompilation.
-┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-008f4b714e96 is missing from the cache.
+┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-009015f677c8 is missing from the cache.
 │ This may mean OrdinaryDiffEqNonlinearSolve [127b3ac7-2247-4354-8eb6-78cf4e7c58e8] does not support precompilation but is imported by a module that does.
 └ @ Base loading.jl:1948
-┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-008f4b714e96 is missing from the cache.
+┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-009015f677c8 is missing from the cache.
 │ This may mean OrdinaryDiffEqNonlinearSolve [127b3ac7-2247-4354-8eb6-78cf4e7c58e8] does not support precompilation but is imported by a module that does.
 └ @ Base loading.jl:1948
-┌ Warning: Module OrdinaryDiffEqSDIRK with build ID ffffffff-ffff-ffff-0000-0090d0532d50 is missing from the cache.
+┌ Warning: Module OrdinaryDiffEqSDIRK with build ID ffffffff-ffff-ffff-0000-00919826cb95 is missing from the cache.
 │ This may mean OrdinaryDiffEqSDIRK [2d112036-d095-4a1e-ab9a-08536f3ecdbf] does not support precompilation but is imported by a module that does.
 └ @ Base loading.jl:1948
-┌ Warning: Module OrdinaryDiffEqBDF with build ID ffffffff-ffff-ffff-0000-009153fd3fd9 is missing from the cache.
+┌ Warning: Module OrdinaryDiffEqBDF with build ID ffffffff-ffff-ffff-0000-00921a7feae2 is missing from the cache.
 │ This may mean OrdinaryDiffEqBDF [6ad6398a-0878-4a85-9266-38940aa047c8] does not support precompilation but is imported by a module that does.
 └ @ Base loading.jl:1948
-┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-008f4b714e96 is missing from the cache.
+┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-009015f677c8 is missing from the cache.
 │ This may mean OrdinaryDiffEqNonlinearSolve [127b3ac7-2247-4354-8eb6-78cf4e7c58e8] does not support precompilation but is imported by a module that does.
 └ @ Base loading.jl:1948
-┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-008f4b714e96 is missing from the cache.
+┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-009015f677c8 is missing from the cache.
 │ This may mean OrdinaryDiffEqNonlinearSolve [127b3ac7-2247-4354-8eb6-78cf4e7c58e8] does not support precompilation but is imported by a module that does.
 └ @ Base loading.jl:1948
-┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-008f4b714e96 is missing from the cache.
+┌ Warning: Module OrdinaryDiffEqNonlinearSolve with build ID ffffffff-ffff-ffff-0000-009015f677c8 is missing from the cache.
 │ This may mean OrdinaryDiffEqNonlinearSolve [127b3ac7-2247-4354-8eb6-78cf4e7c58e8] does not support precompilation but is imported by a module that does.
 └ @ Base loading.jl:1948
-┌ Warning: Module OrdinaryDiffEq with build ID ffffffff-ffff-ffff-0000-008e14ab6a6f is missing from the cache.
+┌ Warning: Module OrdinaryDiffEq with build ID ffffffff-ffff-ffff-0000-008ee21de790 is missing from the cache.
 │ This may mean OrdinaryDiffEq [1dea7af3-3e70-54e6-95c3-0bf5283fa5ed] does not support precompilation but is imported by a module that does.
 └ @ Base loading.jl:1948</code></pre><h2 id="Problem-definition"><a class="docs-heading-anchor" href="#Problem-definition">Problem definition</a><a id="Problem-definition-1"></a><a class="docs-heading-anchor-permalink" href="#Problem-definition" title="Permalink"></a></h2><pre><code class="language-julia hljs">Tmax = 60                                  # Maximum thrust in Newtons
 cTmax = 3600^2 / 1e6; T = Tmax * cTmax     # Conversion from Newtons to kg x Mm / h²
@@ -214,11 +214,11 @@ Number of inequality constraint evaluations          = 34
 Number of equality constraint Jacobian evaluations   = 23
 Number of inequality constraint Jacobian evaluations = 23
 Number of Lagrangian Hessian evaluations             = 22
-Total seconds in IPOPT                               = 4.041
+Total seconds in IPOPT                               = 4.419
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = nlp_sol.variable
 p0 = nlp_sol.costate(0)
-plot(nlp_sol)</code></pre><img src="index-5f56b0c4.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-ff748534.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -246,15 +246,15 @@ shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
 jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.441506e+00     0.000000e+00        12.354583
-     2     7.828938e-02     5.822027e-05        12.321379
-     3     1.805662e-02     1.793354e-05         0.018162
-     4     4.039662e-03     6.128462e-07         0.032244
-     5     1.137949e-04     1.107466e-08         0.009146
-     6     6.538025e-05     1.358877e-10         0.008796
-     7     6.246359e-06     4.488870e-12         0.009821
-     8     3.534277e-08     5.344945e-14         0.009560
-     9     3.607425e-10     1.853529e-18         0.018284
+     1     1.441506e+00     0.000000e+00        12.241768
+     2     7.828938e-02     5.822027e-05        12.073444
+     3     1.805662e-02     1.793354e-05         0.017882
+     4     4.039662e-03     6.128462e-07         0.017836
+     5     1.137949e-04     1.107466e-08         0.032700
+     6     6.538025e-05     1.358877e-10         0.008479
+     7     6.246359e-06     4.488870e-12         0.008377
+     8     3.534277e-08     5.344945e-14         0.009199
+     9     3.607425e-10     1.853529e-18         0.009414
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [14.796404502710015, -0.01616443538965085, -0.9050962202930849, -0.33067877687115305, -0.09648290171205924, 0.03514811057836573, 0.2462656077626256]
@@ -262,7 +262,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 24.782037 seconds
+ * Total time: 24.419140 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -285,21 +285,21 @@ p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.073118e+00     0.000000e+00         4.801023
-     2     1.431619e-01     1.222060e+01        10.248014
-     3     1.090263e-01     1.104500e+01         0.254329
-     4     1.847681e-02     2.971575e+00         0.282180
-     5     1.996342e-02     4.468500e-01         0.255793
-     6     8.607891e-03     2.181855e-02         0.256290
-     7     2.826179e-03     2.618597e-03         0.259779
-     8     1.241800e-03     7.994152e-05         0.262834
-     9     1.554855e-03     6.600726e-05         0.239382
-    10     7.600283e-05     2.807880e-05         0.268730
-    11     4.206208e-05     1.772950e-07         0.271713
-    12     7.673255e-06     3.854864e-07         0.274560
-    13     5.197705e-07     7.297650e-09         0.278380
-    14     5.438044e-08     4.529607e-11         0.250669
-    15     1.587843e-08     5.299562e-13         0.269501
+     1     1.073118e+00     0.000000e+00         4.633260
+     2     1.431619e-01     1.222060e+01         9.938598
+     3     1.090263e-01     1.104500e+01         0.250388
+     4     1.847681e-02     2.971575e+00         0.245329
+     5     1.996342e-02     4.468500e-01         0.238474
+     6     8.607891e-03     2.181855e-02         0.253069
+     7     2.826179e-03     2.618597e-03         0.253780
+     8     1.241800e-03     7.994152e-05         0.254242
+     9     1.554855e-03     6.600726e-05         0.262026
+    10     7.600283e-05     2.807880e-05         0.259150
+    11     4.206208e-05     1.772950e-07         0.232126
+    12     7.673255e-06     3.854864e-07         0.259022
+    13     5.197705e-07     7.297650e-09         0.263618
+    14     5.438044e-08     4.529607e-11         0.273475
+    15     1.587843e-08     5.299562e-13         0.275192
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
@@ -307,7 +307,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 18.473258 seconds
+ * Total time: 17.891830 seconds
  * Function Calls: 15
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
@@ -342,4 +342,4 @@ Pkg.status()</code></pre><pre class="documenter-example-output"><code class="noh
   [1dea7af3] OrdinaryDiffEq v6.89.0
   [91a5bcdd] Plots v1.40.8
   [37e2e46d] LinearAlgebra
-Info Packages marked with ⌃ have new versions available and may be upgradable.</code></pre><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.7.0 on <span class="colophon-date" title="Friday 6 September 2024 20:01">Friday 6 September 2024</span>. Using Julia version 1.10.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+Info Packages marked with ⌃ have new versions available and may be upgradable.</code></pre><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.7.0 on <span class="colophon-date" title="Friday 6 September 2024 21:20">Friday 6 September 2024</span>. Using Julia version 1.10.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
