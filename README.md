@@ -1,16 +1,16 @@
 # Kepler application
 
-[ci-img]: https://github.com/control-toolbox/kepler/actions/workflows/CI.yml/badge.svg?branch=main
-[ci-url]: https://github.com/control-toolbox/kepler/actions/workflows/CI.yml?query=branch%3Amain
+[ci-img]: https://github.com/control-toolbox/Kepler.jl/actions/workflows/CI.yml/badge.svg?branch=main
+[ci-url]: https://github.com/control-toolbox/Kepler.jl/actions/workflows/CI.yml?query=branch%3Amain
 
-[co-img]: https://codecov.io/gh/control-toolbox/kepler/branch/main/graph/badge.svg?token=YM5YQQUSO3
-[co-url]: https://codecov.io/gh/control-toolbox/kepler
+[co-img]: https://codecov.io/gh/control-toolbox/Kepler.jl/branch/main/graph/badge.svg?token=YM5YQQUSO3
+[co-url]: https://codecov.io/gh/control-toolbox/Kepler.jl
 
 [doc-dev-img]: https://img.shields.io/badge/docs-dev-8A2BE2.svg
-[doc-dev-url]: https://control-toolbox.org/kepler/dev/
+[doc-dev-url]: https://control-toolbox.org/Kepler.jl/dev/
 
 [doc-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[doc-stable-url]: https://control-toolbox.org/kepler/stable/
+[doc-stable-url]: https://control-toolbox.org/Kepler.jl/stable/
 
 This repo is part of the [control-toolbox ecosystem](https://github.com/control-toolbox). 
 The control-toolbox ecosystem gathers Julia packages for mathematical control and applications. The root package is [OptimalControl.jl](https://github.com/control-toolbox/OptimalControl.jl) which aims to provide tools to modelise and solve optimal control problems with ordinary differential equations by direct and indirect methods. 
@@ -23,8 +23,8 @@ The control-toolbox ecosystem gathers Julia packages for mathematical control an
 
 ## Contributing
 
-[issue-url]: https://github.com/control-toolbox/kepler/issues
-[first-good-issue-url]: https://github.com/control-toolbox/kepler/contribute
+[issue-url]: https://github.com/control-toolbox/Kepler.jl/issues
+[first-good-issue-url]: https://github.com/control-toolbox/Kepler.jl/contribute
 
 If you think you found a bug or if you have a feature request / suggestion, feel free to open an [issue][issue-url].
 Before opening a pull request, please start an issue or a discussion on the topic. 

@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Kepler application support
-    url: https://github.com/control-toolbox/kepler/discussions
+    url: https://github.com/control-toolbox/Kepler.jl/discussions
     about: Please ask and answer questions about Kepler application here.
   - name: Control-toolbox organisation support
     url: https://github.com/orgs/control-toolbox/discussions

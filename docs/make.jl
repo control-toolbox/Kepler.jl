@@ -14,4 +14,4 @@ makedocs(;
     checkdocs = :none,
 )
 
-deploydocs(repo = "github.com/control-toolbox/kepler.git", devbranch = "main")
+deploydocs(repo = "github.com/control-toolbox/Kepler.jl.git", devbranch = "main")
