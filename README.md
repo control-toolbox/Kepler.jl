@@ -13,7 +13,7 @@
 [doc-stable-url]: https://control-toolbox.org/Kepler.jl/stable/
 
 [licence-img]: https://img.shields.io/badge/License-MIT-yellow.svg
-[licence-url]: https://github.com/control-toolbox/kepler/blob/master/LICENSE
+[licence-url]: https://github.com/control-toolbox/Kepler.jl/blob/master/LICENSE
 
 [aqua-img]: https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg
 [aqua-url]: https://github.com/JuliaTesting/Aqua.jl
