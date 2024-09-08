@@ -24,7 +24,7 @@ Pf = 42.165                                # Final semilatus rectum
 exf, eyf = 0, 0                            # Final eccentricity
 hxf, hyf = 0, 0                            # Final ascending node and inclination
 
-asqrt(x; ε = 1e-9) = sqrt(sqrt(x^2 + ε^2)) # Avoid issues with AD
+asqrt(x; ε=1e-9) = sqrt(sqrt(x^2 + ε^2)) # Avoid issues with AD
 
 function F0(x)
     P, ex, ey, hx, hy, L = x
@@ -81,7 +81,7 @@ end
 
 ## Initialisations, including direct solve for Tmax = 60
 
-init = Dict{Real, Tuple{Real, Vector{Real}}}()
+init = Dict{Real,Tuple{Real,Vector{Real}}}()
 
 if Tmax == 60
     tf = 15                                      # Estimation of final time
@@ -90,7 +90,7 @@ if Tmax == 60
     xf = [Pf, exf, eyf, hxf, hyf, Lf]            # Final state
     x(t) = x0 + (xf - x0) * t / tf               # Linear interpolation
     u(t) = [0.1, 0.5, 0.0]                        # Initial guess for the control
-    nlp_init = (state = x, control = u, variable = tf) # Initial guess for the NLP
+    nlp_init = (state=x, control=u, variable=tf) # Initial guess for the NLP
 
     @def ocp begin
         tf ∈ R, variable
@@ -100,7 +100,8 @@ if Tmax == 60
         x(0) == x0
         x[1:5](tf) == xf[1:5]
         mass = mass0 - β * T * t
-        ẋ(t) == F0(x(t)) + T / mass * (u₁(t) * F1(x(t)) + u₂(t) * F2(x(t)) + u₃(t) * F3(x(t)))
+        ẋ(t) ==
+        F0(x(t)) + T / mass * (u₁(t) * F1(x(t)) + u₂(t) * F2(x(t)) + u₃(t) * F3(x(t)))
         u₁(t)^2 + u₂(t)^2 + u₃(t)^2 ≤ 1
         0.8P0 ≤ P(t) ≤ 1.2Pf
         -1 ≤ ex(t) ≤ 1
@@ -111,7 +112,7 @@ if Tmax == 60
         tf → min
     end
 
-    nlp_sol = OptimalControl.solve(ocp; init = nlp_init, grid_size = 100)
+    nlp_sol = OptimalControl.solve(ocp; init=nlp_init, grid_size=100)
     plot(nlp_sol)
     tf = nlp_sol.variable
     p0 = nlp_sol.costate(0)
@@ -181,7 +182,7 @@ p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 jshoot(ξ) = ForwardDiff.jacobian(shoot, ξ)
 shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
 jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
-bvp_sol = fsolve(shoot!, jshoot!, ξ, show_trace = true);
+bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true);
 println(bvp_sol);
 
 ## Shooting (2/2)
@@ -196,9 +197,9 @@ hr = (t, x, p) -> begin # Regular maximised Hamiltonian (more efficient)
     return h
 end
 
-hr = Hamiltonian(hr; autonomous = false)
+hr = Hamiltonian(hr; autonomous=false)
 fr = Flow(hr) # Regular flow (again)
-bvp_sol = fsolve(shoot!, jshoot!, ξ, show_trace = true);
+bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true);
 println(bvp_sol);
 tf = bvp_sol.x[1];
 p0 = bvp_sol.x[2:end];
@@ -224,13 +225,8 @@ q2 = @. P * ((1 - hx^2 + hy^2) * sL + 2 * hx * hy * cL) / (C * w)
 q3 = @. 2 * P * Z / (C * w)
 
 plt1 = plot3d(
-    1;
-    xlim = (-60, 60),
-    ylim = (-60, 60),
-    zlim = (-5, 5),
-    title = "Orbit transfer",
-    legend = false,
+    1; xlim=(-60, 60), ylim=(-60, 60), zlim=(-5, 5), title="Orbit transfer", legend=false
 )
-@gif for i = 1:N
+@gif for i in 1:N
     push!(plt1, q1[i], q2[i], q3[i])
 end every N ÷ min(N, 100)
