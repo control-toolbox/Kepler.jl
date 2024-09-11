@@ -6,7 +6,7 @@ makedocs(;
     warnonly=[:cross_references, :autodocs_block],
     sitename="kepler",
     format=Documenter.HTML(;
-        repolink = "https://"*repo_url,
+        repolink="https://" * repo_url,
         prettyurls=false,
         assets=[
             asset("https://control-toolbox.org/assets/css/documentation.css"),
@@ -17,6 +17,4 @@ makedocs(;
     checkdocs=:none,
 )
 
-deploydocs(;
-    repo=repo_url*".git", devbranch="main"
-)
+deploydocs(; repo=repo_url * ".git", devbranch="main")
