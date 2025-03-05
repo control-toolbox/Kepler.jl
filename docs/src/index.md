@@ -117,7 +117,7 @@ x(t) = x0 + (xf - x0) * t / tf               # Linear interpolation
 u(t) = [0.1, 0.5, 0.]                        # Initial guess for the control
 nlp_init = (state=x, control=u, variable=tf) # Initial guess for the NLP
 
-@def ocp begin
+ocp = @def begin
     tf ∈ R, variable
     t ∈ [0, tf], time
     x = (P, ex, ey, hx, hy, L) ∈ R⁶, state
