@@ -1,5 +1,19 @@
 # [Minimum time orbit transfer](@id orbit)
 
+```@setup main
+using MINPACK
+function fsolve(f, j, x; kwargs...)
+    try
+        MINPACK.fsolve(f, j, x; kwargs...)
+    catch e
+        println("Erreur using MINPACK")
+        println(e)
+        println("hybrj not supported. Replaced by hybrd even if it is not visible on the doc.")
+        MINPACK.fsolve(f, x; kwargs...)
+    end
+end
+```
+
 ## Introduction
 
 ```@raw html
@@ -114,7 +128,7 @@ Lf = 3π                                      # Estimation of final longitude
 x0 = [P0, ex0, ey0, hx0, hy0, L0]            # Initial state
 xf = [Pf, exf, eyf, hxf, hyf, Lf]            # Final state
 x(t) = x0 + (xf - x0) * t / tf               # Linear interpolation
-u(t) = [0.1, 0.5, 0.]                        # Initial guess for the control
+u = [0.1, 0.5, 0.]                        # Initial guess for the control
 nlp_init = (state=x, control=u, variable=tf) # Initial guess for the NLP
 
 ocp = @def begin
@@ -137,15 +151,16 @@ nothing # hide
 ```
 
 ```@example main
-tf = nlp_sol.variable
-p0 = nlp_sol.costate(0)
+tf = variable(nlp_sol)
+p  = costate(nlp_sol)
+p0 = p(0)
 plot(nlp_sol)
 ```
 
 ## Shooting (1/2), Tmax = 60 Newtons
 
 ```@example main
-function ur(t, x, p, tf) # Regular maximising control 
+function ur(x, p, tf) # Regular maximising control 
     H1 = p' * F1(x)
     H2 = p' * F2(x)
     H3 = p' * F3(x)
@@ -231,14 +246,68 @@ plt1 = plot3d(1; xlim = (-60, 60), ylim = (-60, 60), zlim = (-5, 5), title = "Or
 end every N ÷ min(N, 100) 
 ```
 
-## Dependencies
+## Reproducibility
 
-All the numerical simulations to generate this documentation are performed with 
-the following packages.
+```@raw html
+<details><summary>The documentation of this package was built using these direct dependencies,</summary>
+```
 
 ```@example
-using Pkg
-Pkg.status()
+using Pkg # hide
+Pkg.status() # hide
+```
+
+```@raw html
+</details>
+```
+
+```@raw html
+<details><summary>and using this machine and Julia version.</summary>
+```
+
+```@example
+using InteractiveUtils # hide
+versioninfo() # hide
+```
+
+```@raw html
+</details>
+```
+
+```@raw html
+<details><summary>A more complete overview of all dependencies and their versions is also provided.</summary>
+```
+
+```@example
+using Pkg # hide
+Pkg.status(; mode = PKGMODE_MANIFEST) # hide
+```
+
+```@raw html
+</details>
+```
+
+```@eval
+using TOML
+using Markdown
+version = TOML.parse(read("../../Project.toml", String))["version"]
+name = TOML.parse(read("../../Project.toml", String))["name"]
+link_manifest = "https://github.com/SciML/" *
+                name *
+                ".jl/tree/gh-pages/v" *
+                version *
+                "/assets/Manifest.toml"
+link_project = "https://github.com/SciML/" *
+               name *
+               ".jl/tree/gh-pages/v" *
+               version *
+               "/assets/Project.toml"
+Markdown.parse("""You can also download the
+[manifest]($link_manifest)
+file and the
+[project]($link_project)
+file.
+""")
 ```
 
 ## References
