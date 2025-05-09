@@ -165,31 +165,32 @@ iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
 iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
   20  1.4796807e+01 5.17e-04 5.95e-05  -5.1 6.84e-02    -  1.00e+00 1.00e+00h  1
   21  1.4796405e+01 1.26e-07 1.37e-08 -11.0 1.93e-03    -  1.00e+00 1.00e+00h  1
+  22  1.4796405e+01 7.11e-15 1.89e-14 -11.0 2.11e-06    -  1.00e+00 1.00e+00h  1
 
-Number of Iterations....: 21
+Number of Iterations....: 22
 
                                    (scaled)                 (unscaled)
-Objective...............:   1.4796404863783373e+01    1.4796404863783373e+01
-Dual infeasibility......:   1.3697506295873296e-08    1.3697506295873296e-08
-Constraint violation....:   1.2616821831734626e-07    1.2616821831734626e-07
+Objective...............:   1.4796404502710013e+01    1.4796404502710013e+01
+Dual infeasibility......:   1.8929302569858919e-14    1.8929302569858919e-14
+Constraint violation....:   7.1054273576010019e-15    7.1054273576010019e-15
 Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
-Complementarity.........:   1.3417720767463476e-08    1.3417720767463476e-08
-Overall NLP error.......:   1.2616821831734626e-07    1.2616821831734626e-07
+Complementarity.........:   1.0004070416573207e-11    1.0004070416573207e-11
+Overall NLP error.......:   1.0004070416573207e-11    1.0004070416573207e-11
 
 
-Number of objective function evaluations             = 33
-Number of objective gradient evaluations             = 22
-Number of equality constraint evaluations            = 33
-Number of inequality constraint evaluations          = 33
-Number of equality constraint Jacobian evaluations   = 22
-Number of inequality constraint Jacobian evaluations = 22
-Number of Lagrangian Hessian evaluations             = 21
-Total seconds in IPOPT                               = 6.251
+Number of objective function evaluations             = 34
+Number of objective gradient evaluations             = 23
+Number of equality constraint evaluations            = 34
+Number of inequality constraint evaluations          = 34
+Number of equality constraint Jacobian evaluations   = 23
+Number of inequality constraint Jacobian evaluations = 23
+Number of Lagrangian Hessian evaluations             = 22
+Total seconds in IPOPT                               = 6.059
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = variable(nlp_sol)
 p  = costate(nlp_sol)
 p0 = p(0)
-plot(nlp_sol)</code></pre><img src="index-2fbd30ca.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-ebec2995.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -217,23 +218,23 @@ shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
 jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.441506e+00     0.000000e+00         7.911273
-     2     7.828904e-02     5.822092e-05        14.433610
-     3     1.805789e-02     1.793255e-05         0.006112
-     4     4.039623e-03     6.129907e-07         0.005667
-     5     1.138619e-04     1.107407e-08         0.015535
-     6     6.538025e-05     1.359255e-10         0.005620
-     7     6.244845e-06     4.489006e-12         0.009841
-     8     3.534559e-08     5.342350e-14         0.005779
-     9     3.606218e-10     1.853859e-18         0.008501
+     1     1.441506e+00     0.000000e+00         7.116623
+     2     7.828938e-02     5.822027e-05        23.817153
+     3     1.805662e-02     1.793354e-05         0.015542
+     4     4.039662e-03     6.128462e-07         0.005926
+     5     1.137949e-04     1.107466e-08         0.014634
+     6     6.538025e-05     1.358877e-10         0.005824
+     7     6.246359e-06     4.488870e-12         0.008746
+     8     3.534264e-08     5.344945e-14         0.005658
+     9     3.606004e-10     1.853600e-18         0.008005
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
- * Starting Point: [14.796404863783373, -0.016164433702769165, -0.9050962222165153, -0.3306787679250943, -0.09648293225364692, 0.035148118586239945, 0.24626559970809675]
- * Zero: [14.800364354664758, -0.016189714921626915, -0.9084889547974425, -0.3252598589830436, -0.09447217088704539, 0.03432296283542438, 0.24184432891069754]
+ * Starting Point: [14.796404502710013, -0.016164435389650858, -0.9050962202930851, -0.33067877687115294, -0.09648290171205891, 0.03514811057836572, 0.24626560776262557]
+ * Zero: [14.800364354664756, -0.016189714921626873, -0.9084889547974427, -0.32525985898304305, -0.09447217088704613, 0.03432296283542479, 0.24184432891069738]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 22.402010 seconds
+ * Total time: 30.998171 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -256,22 +257,22 @@ p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.073118e+00     0.000000e+00         4.371657
-     2     1.431619e-01     1.222060e+01        11.056950
-     3     1.090263e-01     1.104500e+01         0.289040
-     4     1.847681e-02     2.971575e+00         0.317280
-     5     1.996342e-02     4.468500e-01         0.262949
-     6     8.607891e-03     2.181855e-02         0.293898
-     7     2.826201e-03     2.618597e-03         0.267660
-     8     1.241794e-03     7.993872e-05         0.293262
-     9     1.555157e-03     6.602970e-05         0.289012
-    10     7.599961e-05     2.809120e-05         0.290977
-    11     4.206481e-05     1.773353e-07         0.297937
-    12     7.672444e-06     3.852977e-07         0.275044
-    13     5.441236e-07     7.260827e-09         0.265315
-    14     5.909087e-08     4.510506e-11         0.380645
-    15     2.813787e-08     2.110683e-13         0.664074
-    16     4.440955e-09     3.591076e-17         0.345580
+     1     1.073118e+00     0.000000e+00         4.471403
+     2     1.431619e-01     1.222060e+01        15.821899
+     3     1.090263e-01     1.104500e+01         0.304284
+     4     1.847681e-02     2.971575e+00         0.293080
+     5     1.996342e-02     4.468500e-01         0.291898
+     6     8.607891e-03     2.181855e-02         0.273355
+     7     2.826201e-03     2.618597e-03         0.267406
+     8     1.241794e-03     7.993872e-05         0.268603
+     9     1.555157e-03     6.602970e-05         0.283458
+    10     7.599961e-05     2.809120e-05         0.278779
+    11     4.206481e-05     1.773353e-07         0.291322
+    12     7.672444e-06     3.852977e-07         0.278251
+    13     5.441236e-07     7.260827e-09         0.275198
+    14     5.909087e-08     4.510506e-11         0.698040
+    15     2.813787e-08     2.110683e-13         0.302540
+    16     4.440955e-09     3.591076e-17         0.316170
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
@@ -279,7 +280,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 19.961381 seconds
+ * Total time: 24.715766 seconds
  * Function Calls: 16
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
@@ -304,13 +305,13 @@ plt1 = plot3d(1; xlim = (-60, 60), ylim = (-60, 60), zlim = (-5, 5), title = &qu
 @gif for i = 1:N
     push!(plt1, q1[i], q2[i], q3[i])
 end every N ÷ min(N, 100)</code></pre><img src="index-19115ccf.gif" alt="Example block output"/><h2 id="Reproducibility"><a class="docs-heading-anchor" href="#Reproducibility">Reproducibility</a><a id="Reproducibility-1"></a><a class="docs-heading-anchor-permalink" href="#Reproducibility" title="Permalink"></a></h2><details><summary>The documentation of this package was built using these direct dependencies,</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/Kepler.jl/Kepler.jl/docs/Project.toml`
-  [e30172f5] Documenter v1.10.1
+  [e30172f5] Documenter v1.11.0
 ⌅ [f6369f11] ForwardDiff v0.10.38
   [459d104a] Kepler v0.2.0 `~/work/Kepler.jl/Kepler.jl`
   [4854310b] MINPACK v1.3.0
   [f4238b75] NLPModelsIpopt v0.10.4
-  [5f98b655] OptimalControl v1.0.0
-  [1dea7af3] OrdinaryDiffEq v6.93.0
+  [5f98b655] OptimalControl v1.0.3
+  [1dea7af3] OrdinaryDiffEq v6.96.0
   [91a5bcdd] Plots v1.40.13
   [37e2e46d] LinearAlgebra v1.11.0
 Info Packages marked with ⌅ have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated`</code></pre></details><details><summary>and using this machine and Julia version.</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Julia Version 1.11.5
@@ -332,23 +333,20 @@ Environment:
   [7d9f7c33] Accessors v0.1.42
   [79e6a3ab] Adapt v4.3.0
   [66dad0bd] AliasTables v1.1.3
-  [ec485272] ArnoldiMethod v0.4.0
-  [4fba245c] ArrayInterface v7.18.0
+  [4fba245c] ArrayInterface v7.18.1
   [4c555306] ArrayLayouts v1.11.1
   [13072b0f] AxisAlgorithms v1.1.0
-  [6e4b80f9] BenchmarkTools v1.6.0
   [d1d4a3ce] BitFlags v0.1.9
   [62783981] BitTwiddlingConvenienceFunctions v0.1.6
-  [70df07ce] BracketingNonlinearSolve v1.1.3
+  [70df07ce] BracketingNonlinearSolve v1.2.0
   [2a0fbf3d] CPUSummary v0.2.6
-⌅ [54762871] CTBase v0.15.0
-  [790bbbee] CTDirect v0.14.8
-  [1c39547c] CTFlows v0.8.1
-  [34c4fa32] CTModels v0.2.3
-  [32681960] CTParser v0.2.3
+  [54762871] CTBase v0.16.0
+  [790bbbee] CTDirect v0.14.10
+  [1c39547c] CTFlows v0.8.2
+  [34c4fa32] CTModels v0.3.8
+  [32681960] CTParser v0.2.5
   [d360d2e6] ChainRulesCore v1.25.1
   [fb6a15b2] CloseOpenIntervals v0.1.13
-  [523fee87] CodecBzip2 v0.8.5
   [944b1d66] CodecZlib v0.7.8
   [35d6a980] ColorSchemes v3.29.0
   [3da002f7] ColorTypes v0.12.1
@@ -369,12 +367,12 @@ Environment:
   [864edb3b] DataStructures v0.18.22
   [e2d170a0] DataValueInterfaces v1.0.0
   [8bb1440f] DelimitedFiles v1.9.1
-  [2b5f629d] DiffEqBase v6.167.2
+  [2b5f629d] DiffEqBase v6.172.0
   [163ba53b] DiffResults v1.1.0
   [b552c78f] DiffRules v1.15.1
-  [a0c0ee7d] DifferentiationInterface v0.6.52
+  [a0c0ee7d] DifferentiationInterface v0.6.53
   [ffbed154] DocStringExtensions v0.9.4
-  [e30172f5] Documenter v1.10.1
+  [e30172f5] Documenter v1.11.0
   [4e289a0a] EnumX v1.0.5
   [f151be2c] EnzymeCore v0.8.8
   [460bff9d] ExceptionUnwrapping v0.1.11
@@ -396,26 +394,23 @@ Environment:
   [46192b85] GPUArraysCore v0.2.0
   [28b8d3ca] GR v0.73.14
   [c145ed77] GenericSchur v0.5.5
-  [d7ba0133] Git v1.3.1
-  [86223c79] Graphs v1.12.1
+  [d7ba0133] Git v1.4.0
   [42e2da0e] Grisu v1.0.2
-  [34c5aeac] HSL v0.5.0
+  [34c5aeac] HSL v0.5.1
   [cd3eb016] HTTP v1.10.16
   [b5f81e59] IOCapture v0.2.5
   [615f187c] IfElse v0.1.1
-  [d25df0c9] Inflate v0.1.5
   [a98d9a8b] Interpolations v0.15.1
   [3587e190] InverseFunctions v0.1.17
-  [b6b21f68] Ipopt v1.9.0
+  [b6b21f68] Ipopt v1.10.3
   [92d709cd] IrrationalConstants v0.2.4
   [82899510] IteratorInterfaceExtensions v1.0.0
   [1019f520] JLFzf v0.1.11
   [692b3bcd] JLLWrappers v1.7.0
   [682c06a0] JSON v0.21.4
-  [0f8b85d8] JSON3 v1.14.2
   [ae98c720] Jieko v0.2.1
   [459d104a] Kepler v0.2.0 `~/work/Kepler.jl/Kepler.jl`
-  [ba0b0d4f] Krylov v0.10.0
+  [ba0b0d4f] Krylov v0.10.1
   [b964fa9f] LaTeXStrings v1.4.0
   [23fbe1c1] Latexify v0.16.7
   [10f19ff3] LayoutPointers v0.1.17
@@ -424,7 +419,7 @@ Environment:
   [87fe0de2] LineSearch v0.1.4
   [d3d80556] LineSearches v7.3.0
   [5c8ed15e] LinearOperators v2.10.0
-  [7ed4a6bd] LinearSolve v3.8.0
+  [7ed4a6bd] LinearSolve v3.11.0
   [2ab3a3ac] LogExpFunctions v0.3.29
   [e6f89c97] LoggingExtras v1.1.0
   [4854310b] MINPACK v1.3.0
@@ -433,33 +428,31 @@ Environment:
   [1914dd2f] MacroTools v0.5.16
   [d125e4d3] ManualMemory v0.1.8
   [d0879d2d] MarkdownAST v0.1.2
-  [b8f27783] MathOptInterface v1.39.0
   [bb5d69b7] MaybeInplace v0.1.4
   [739be429] MbedTLS v1.1.9
   [442fdcdd] Measures v0.3.2
   [e1d29d7a] Missings v1.2.0
   [2e0e35c7] Moshi v0.3.5
   [46d2c3a1] MuladdMacro v0.2.4
-  [d8a4904e] MutableArithmetics v1.6.4
   [a4795742] NLPModels v0.21.4
   [f4238b75] NLPModelsIpopt v0.10.4
   [d41bc354] NLSolversBase v7.9.1
   [77ba4419] NaNMath v1.1.3
-  [8913a72c] NonlinearSolve v4.6.0
-  [be0214bd] NonlinearSolveBase v1.5.3
-  [5959db7a] NonlinearSolveFirstOrder v1.3.1
-  [9a2c21bd] NonlinearSolveQuasiNewton v1.2.1
-  [26075421] NonlinearSolveSpectralMethods v1.1.1
+  [8913a72c] NonlinearSolve v4.8.0
+  [be0214bd] NonlinearSolveBase v1.7.0
+  [5959db7a] NonlinearSolveFirstOrder v1.5.0
+  [9a2c21bd] NonlinearSolveQuasiNewton v1.4.0
+  [26075421] NonlinearSolveSpectralMethods v1.2.0
   [6fe1bfb0] OffsetArrays v1.17.0
   [4d8831e6] OpenSSL v1.4.3
-  [5f98b655] OptimalControl v1.0.0
+  [5f98b655] OptimalControl v1.0.3
   [bac558e1] OrderedCollections v1.8.0
-  [1dea7af3] OrdinaryDiffEq v6.93.0
+  [1dea7af3] OrdinaryDiffEq v6.96.0
   [89bda076] OrdinaryDiffEqAdamsBashforthMoulton v1.2.0
-  [6ad6398a] OrdinaryDiffEqBDF v1.4.0
-  [bbf590c4] OrdinaryDiffEqCore v1.22.0
-  [50262376] OrdinaryDiffEqDefault v1.3.0
-  [4302a76b] OrdinaryDiffEqDifferentiation v1.6.0
+  [6ad6398a] OrdinaryDiffEqBDF v1.5.0
+  [bbf590c4] OrdinaryDiffEqCore v1.23.0
+  [50262376] OrdinaryDiffEqDefault v1.4.0
+  [4302a76b] OrdinaryDiffEqDifferentiation v1.7.0
   [9286f039] OrdinaryDiffEqExplicitRK v1.1.0
   [e0540318] OrdinaryDiffEqExponentialRK v1.4.0
   [becaefa8] OrdinaryDiffEqExtrapolation v1.5.0
@@ -471,7 +464,7 @@ Environment:
   [521117fe] OrdinaryDiffEqLinear v1.1.0
   [1344f307] OrdinaryDiffEqLowOrderRK v1.2.0
   [b0944070] OrdinaryDiffEqLowStorageRK v1.3.0
-  [127b3ac7] OrdinaryDiffEqNonlinearSolve v1.6.0
+  [127b3ac7] OrdinaryDiffEqNonlinearSolve v1.6.1
   [c9986a66] OrdinaryDiffEqNordsieck v1.1.0
   [5dd0a6cf] OrdinaryDiffEqPDIRK v1.3.0
   [5b33eab2] OrdinaryDiffEqPRK v1.1.0
@@ -479,66 +472,62 @@ Environment:
   [af6ede74] OrdinaryDiffEqRKN v1.1.0
   [43230ef6] OrdinaryDiffEqRosenbrock v1.9.0
   [2d112036] OrdinaryDiffEqSDIRK v1.3.0
-  [669c94d9] OrdinaryDiffEqSSPRK v1.2.1
+  [669c94d9] OrdinaryDiffEqSSPRK v1.3.0
   [e3e12d00] OrdinaryDiffEqStabilizedIRK v1.3.0
   [358294b1] OrdinaryDiffEqStabilizedRK v1.1.0
   [fa646aed] OrdinaryDiffEqSymplecticRK v1.3.0
   [b1df2697] OrdinaryDiffEqTsit5 v1.1.0
-  [79d7bb75] OrdinaryDiffEqVerner v1.1.1
-  [65ce6f38] PackageExtensionCompat v1.0.2
+  [79d7bb75] OrdinaryDiffEqVerner v1.2.0
   [d96e819e] Parameters v0.12.3
-  [69de0a69] Parsers v2.8.2
+  [69de0a69] Parsers v2.8.3
   [ccf2f8ad] PlotThemes v3.3.0
   [995b91a9] PlotUtils v1.4.3
   [91a5bcdd] Plots v1.40.13
   [f517fe37] Polyester v0.7.16
   [1d0040c9] PolyesterWeave v0.2.2
-  [d236fae5] PreallocationTools v0.4.26
+  [d236fae5] PreallocationTools v0.4.27
 ⌅ [aea7be01] PrecompileTools v1.2.1
   [21216c6a] Preferences v1.4.3
   [08abe8d2] PrettyTables v2.4.0
   [43287f4e] PtrArrays v1.3.0
-  [be4d8f0f] Quadmath v0.5.11
+  [be4d8f0f] Quadmath v0.5.13
   [c84ed2f1] Ratios v0.4.5
   [3cdcf5f2] RecipesBase v1.3.4
   [01d81517] RecipesPipeline v0.6.12
-  [731186ca] RecursiveArrayTools v3.31.2
+  [731186ca] RecursiveArrayTools v3.33.0
   [189a3867] Reexport v1.2.2
   [2792f1a3] RegistryInstances v0.1.0
   [05181044] RelocatableFolders v1.0.1
   [ae029012] Requires v1.3.1
   [37e2e3b7] ReverseDiff v1.16.1
-  [7e49a35a] RuntimeGeneratedFunctions v0.5.13
+  [7e49a35a] RuntimeGeneratedFunctions v0.5.14
   [94e857df] SIMDTypes v0.1.0
-  [0bca4576] SciMLBase v2.84.0
-  [19f34311] SciMLJacobianOperators v0.1.2
-  [c0aeaf25] SciMLOperators v0.3.13
+⌃ [0bca4576] SciMLBase v2.87.0
+  [19f34311] SciMLJacobianOperators v0.1.4
+⌅ [c0aeaf25] SciMLOperators v0.3.13
   [53ae85a6] SciMLStructures v1.7.0
   [6c6a2e73] Scratch v1.2.1
   [efcf1570] Setfield v1.1.2
   [992d4aef] Showoff v1.0.3
   [777ac1f9] SimpleBufferStream v1.2.0
-  [727e6d20] SimpleNonlinearSolve v2.2.2
-  [699a6c99] SimpleTraits v0.9.4
+  [727e6d20] SimpleNonlinearSolve v2.4.0
   [ce78b400] SimpleUnPack v1.1.0
   [ff4d7338] SolverCore v0.3.8
   [a2af1166] SortingAlgorithms v1.2.1
-  [9f842d2f] SparseConnectivityTracer v0.6.17
-  [47a9eef4] SparseDiffTools v2.24.0
-  [0a514795] SparseMatrixColorings v0.4.18
+  [9f842d2f] SparseConnectivityTracer v0.6.18
+  [0a514795] SparseMatrixColorings v0.4.19
   [276daf66] SpecialFunctions v2.5.1
-  [860ef19b] StableRNGs v1.0.2
+  [860ef19b] StableRNGs v1.0.3
   [aedffcd0] Static v1.2.0
   [0d7ed370] StaticArrayInterface v1.8.0
   [90137ffa] StaticArrays v1.9.13
   [1e83bf80] StaticArraysCore v1.4.3
   [10745b16] Statistics v1.11.1
   [82ae8749] StatsAPI v1.7.0
-  [2913bbd2] StatsBase v0.34.4
+  [2913bbd2] StatsBase v0.34.5
   [7792a7ef] StrideArraysCore v0.5.7
   [892a3eda] StringManipulation v0.4.1
-  [856f2bd8] StructTypes v1.11.0
-  [2efcf032] SymbolicIndexingInterface v0.3.39
+  [2efcf032] SymbolicIndexingInterface v0.3.40
   [3783bdb8] TableTraits v1.0.1
   [bd369af6] Tables v1.12.0
   [62fd8b95] TensorCore v0.1.1
@@ -552,7 +541,6 @@ Environment:
   [1986cc42] Unitful v1.22.0
   [45397f5d] UnitfulLatexify v1.6.4
   [41fe7b60] Unzip v0.2.0
-  [19fa3120] VertexSafeGraphs v0.2.0
   [efce3f68] WoodburyMatrices v1.0.0
   [ae81ac8f] ASL_jll v0.1.3+0
   [6e34b625] Bzip2_jll v1.0.9+0
@@ -578,7 +566,7 @@ Environment:
   [aacddb02] JpegTurbo_jll v3.1.1+0
   [c1c5ebd0] LAME_jll v3.100.2+0
   [88015f11] LERC_jll v4.0.1+0
-  [1d63c593] LLVMOpenMP_jll v18.1.7+0
+  [1d63c593] LLVMOpenMP_jll v18.1.8+0
   [dd4b983a] LZO_jll v2.10.3+0
 ⌅ [e9f186c6] Libffi_jll v3.2.2+2
   [7e76a0d4] Libglvnd_jll v1.7.1+1
@@ -588,10 +576,11 @@ Environment:
   [38a345b3] Libuuid_jll v2.41.0+0
   [d00139f3] METIS_jll v5.1.3+0
   [856f044c] MKL_jll v2025.0.1+1
-  [d7ed1dd3] MUMPS_seq_jll v500.700.301+0
+⌅ [d7ed1dd3] MUMPS_seq_jll v500.700.301+0
   [e7412a2a] Ogg_jll v1.3.5+1
   [656ef2d0] OpenBLAS32_jll v0.3.29+0
-  [458c3c95] OpenSSL_jll v3.0.16+0
+  [9bd350c2] OpenSSH_jll v10.0.1+0
+  [458c3c95] OpenSSL_jll v3.5.0+0
   [efe28fd5] OpenSpecFun_jll v0.5.6+0
   [91d4177d] Opus_jll v1.3.3+0
   [36c8627f] Pango_jll v1.56.1+0
@@ -610,11 +599,11 @@ Environment:
   [c834827a] Xorg_libSM_jll v1.2.6+0
   [4f6342f7] Xorg_libX11_jll v1.8.12+0
   [0c0b7dd1] Xorg_libXau_jll v1.0.13+0
-  [935fb764] Xorg_libXcursor_jll v1.2.3+0
+  [935fb764] Xorg_libXcursor_jll v1.2.4+0
   [a3789734] Xorg_libXdmcp_jll v1.1.6+0
   [1082639a] Xorg_libXext_jll v1.3.7+0
   [d091e8ba] Xorg_libXfixes_jll v6.0.1+0
-  [a51aa0fd] Xorg_libXi_jll v1.8.2+0
+  [a51aa0fd] Xorg_libXi_jll v1.8.3+0
   [d1454406] Xorg_libXinerama_jll v1.1.6+0
   [ec84b674] Xorg_libXrandr_jll v1.5.5+0
   [ea2f1a96] Xorg_libXrender_jll v0.9.12+0
@@ -627,7 +616,7 @@ Environment:
   [0d47668e] Xorg_xcb_util_renderutil_jll v0.3.9+1
   [c22f9ab0] Xorg_xcb_util_wm_jll v0.4.1+1
   [35661453] Xorg_xkbcomp_jll v1.4.7+0
-  [33bec58e] Xorg_xkeyboard_config_jll v2.39.0+0
+  [33bec58e] Xorg_xkeyboard_config_jll v2.44.0+0
   [c5fb5394] Xorg_xtrans_jll v1.6.0+0
   [3161d3a3] Zstd_jll v1.5.7+1
   [b792d7bf] cminpack_jll v1.3.12+0
@@ -640,13 +629,13 @@ Environment:
   [2db6ffa8] libevdev_jll v1.11.0+0
   [f638f0a6] libfdk_aac_jll v2.0.3+0
   [36db933b] libinput_jll v1.18.0+0
-  [b53b4c65] libpng_jll v1.6.47+0
+  [b53b4c65] libpng_jll v1.6.48+0
   [f27f6e37] libvorbis_jll v1.3.7+2
   [009596ad] mtdev_jll v1.1.6+0
   [1317d2d5] oneTBB_jll v2022.0.0+0
 ⌅ [1270edf5] x264_jll v2021.5.5+0
 ⌅ [dfaa095f] x265_jll v3.5.0+0
-  [d8fb68d0] xkbcommon_jll v1.4.1+2
+  [d8fb68d0] xkbcommon_jll v1.8.1+0
   [0dad84c5] ArgTools v1.1.2
   [56f22d72] Artifacts v1.11.0
   [2a0f44e3] Base64 v1.11.0
@@ -667,7 +656,6 @@ Environment:
   [ca575930] NetworkOptions v1.2.0
   [44cfe95a] Pkg v1.11.0
   [de0858da] Printf v1.11.0
-  [9abbd945] Profile v1.11.0
   [3fa0cd96] REPL v1.11.0
   [9a3f8284] Random v1.11.0
   [ea8e919c] SHA v0.7.0
@@ -695,4 +683,4 @@ Environment:
   [8e850b90] libblastrampoline_jll v5.11.0+0
   [8e850ede] nghttp2_jll v1.59.0+0
   [3f19e933] p7zip_jll v17.4.0+2
-Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><p>You can also download the <a href="https://github.com/SciML/Kepler.jl/tree/gh-pages/v0.2.0/assets/Manifest.toml">manifest</a> file and the <a href="https://github.com/SciML/Kepler.jl/tree/gh-pages/v0.2.0/assets/Project.toml">project</a> file.</p><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.10.1 on <span class="colophon-date" title="Saturday 19 April 2025 13:29">Saturday 19 April 2025</span>. Using Julia version 1.11.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><p>You can also download the <a href="https://github.com/control-toolbox/Kepler.jl/tree/gh-pages/v0.2.0/assets/Manifest.toml">manifest</a> file and the <a href="https://github.com/control-toolbox/Kepler.jl/tree/gh-pages/v0.2.0/assets/Project.toml">project</a> file.</p><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.11.0 on <span class="colophon-date" title="Friday 9 May 2025 20:21">Friday 9 May 2025</span>. Using Julia version 1.11.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
