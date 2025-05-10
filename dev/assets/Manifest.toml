@@ -913,7 +913,7 @@ version = "3.1.1+0"
 [[deps.Kepler]]
 path = "/home/runner/work/Kepler.jl/Kepler.jl"
 uuid = "459d104a-0eb7-491b-905e-d1a4d4db1876"
-version = "0.2.0"
+version = "0.2.1"
 
 [[deps.Krylov]]
 deps = ["LinearAlgebra", "Printf", "SparseArrays"]
