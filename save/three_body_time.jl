@@ -28,12 +28,11 @@ function grad_omega(q)
     return [dΩdx, dΩdy]
 end
 
-# Initial guess functions
+
 x(t) = x0 + (xf - x0) * t / tf_guess
-u(t) = [0.01, 0.01]  # Initial control guess
+u(t) = [0.01, 0.01] 
 nlp_init = (state = x, control = u, variable = tf_guess)
 
-# OCP definition (Minimum-time CR3BP)
 @def ocp begin
     tf ∈ R, variable
     t ∈ [0, tf], time
@@ -50,8 +49,5 @@ nlp_init = (state = x, control = u, variable = tf_guess)
     tf → min
 end
 
-# Solve the problem
 nlp_sol = OptimalControl.solve(ocp; init=nlp_init, grid_size=100, print_level=3)
-
-# Plot the result
 plot(nlp_sol, vars=:x, title="CR3BP - Minimum Time Transfer")
