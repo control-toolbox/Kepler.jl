@@ -1,80 +1,110 @@
 using OptimalControl
-using CTBase
 using NLPModelsIpopt
 using OrdinaryDiffEq
 using Plots
-using ForwardDiff
 using MINPACK
+using ForwardDiff
 using LinearAlgebra
 
-# ===================== Données du problème =====================
-μ = 5165.8620912
-ε = 1.0
-tf_fixed = 5000.0  # Temps plus court pour tester
-α = 0.9
 
-q0 = [7000.0, 0.0]
-v0 = [0.0, 7.5]
-qf = [42165.0, 0.0]
-vf = [0.0, 3.07]
+Tmax = 60                                  # Maximum thrust in Newtons
+cTmax = 3600^2 / 1e6; T = Tmax * cTmax     # Conversion from Newtons to kg x Mm / h²
+mass0 = 1500                               # Initial mass of the spacecraft
+β = 1.42e-02                               # Engine specific impulsion
+μ = 5165.8620912                           # Earth gravitation constant
+P0 = 11.625                                # Initial semilatus rectum
+ex0, ey0 = 0.75, 0                         # Initial eccentricity
+hx0, hy0 = 6.12e-2, 0                      # Initial ascending node and inclination
+L0 = π                                     # Initial longitude
+Pf = 42.165                                # Final semilatus rectum
+exf, eyf = 0, 0                            # Final eccentricity
+hxf, hyf = 0, 0                            # Final ascending node and inclination
+ε = 1e-1                             # Regularization parameter for logarithmic barrier
+tf= 15
 
-
-function cartesian_to_equinoctial_2d(q::Vector, v::Vector, μ)
-    r = norm(q)
-    v2 = dot(v, v)
-    h = q[1]*v[2] - q[2]*v[1]
-    e_vec = (v2 - μ/r) * q - dot(q, v) * v
-    e_vec /= μ
-    P = h^2 / μ
-    ex = e_vec[1]
-    ey = e_vec[2]
-    θ = atan(q[2], q[1])
-    L = θ
-    return [P, ex, ey, L]
+asqrt(x; ε=1e-9) = sqrt(sqrt(x^2 + ε^2))  # sqrt lissée pour AD
+function F0(x)
+    P, ex, ey, hx, hy, L = x
+    pdm = asqrt(P / μ)
+    cl = cos(L)
+    sl = sin(L)
+    w = 1 + ex * cl + ey * sl
+    F = zeros(eltype(x), 6) # Use eltype to allow overloading for AD
+    F[6] = w^2 / (P * pdm)
+    return F
+end
+function F1(x)
+    P, ex, ey, hx, hy, L = x
+    pdm = asqrt(P / μ)
+    cl = cos(L)
+    sl = sin(L)
+    F = zeros(eltype(x), 6)
+    F[2] = pdm *   sl
+    F[3] = pdm * (-cl)
+    return F
+end
+function F2(x)
+    P, ex, ey, hx, hy, L = x
+    pdm = asqrt(P / μ)
+    cl = cos(L)
+    sl = sin(L)
+    w = 1 + ex * cl + ey * sl
+    F = zeros(eltype(x), 6)
+    F[1] = pdm * 2 * P / w
+    F[2] = pdm * (cl + (ex + cl) / w)
+    F[3] = pdm * (sl + (ey + sl) / w)
+    return F
+end
+function F3(x)
+    P, ex, ey, hx, hy, L = x
+    pdm = asqrt(P / μ)
+    cl = cos(L)
+    sl = sin(L)
+    w = 1 + ex * cl + ey * sl
+    pdmw = pdm / w
+    zz = hx * sl - hy * cl
+    uh = (1 + hx^2 + hy^2) / 2
+    F = zeros(eltype(x), 6)
+    F[2] = pdmw * (-zz * ey)
+    F[3] = pdmw *   zz * ex
+    F[4] = pdmw *   uh * cl
+    F[5] = pdmw *   uh * sl
+    F[6] = pdmw *   zz
+    return F
 end
 
-x0 = cartesian_to_equinoctial_2d(q0, v0, μ)
-xf = cartesian_to_equinoctial_2d(qf, vf, μ)
+tf = 15                                      # Estimation of final time
+Lf = 3π                                      # Estimation of final longitude
+x0 = [P0, ex0, ey0, hx0, hy0, L0]            # Initial state
+xf = [Pf, exf, eyf, hxf, hyf, Lf]            # Final state
+x(t) = x0 + (xf - x0) * t / tf               # Linear interpolation
+u = [0.1, 0.5, 0.]                        # Initial guess for the control
+nlp_init = (state=x, control=u) # Initial guess for the NLP
 
-x(t) = x0 + (xf - x0) * t / tf_fixed
-u(t) = [0.01, 0.01]
-nlp_init = (state = x, control = u)
 
-# ===================== OCP équinoctial 2D =====================
-
-@def ocp begin
-    t ∈ [0, tf_fixed], time
-    x ∈ R⁴, state
-    u ∈ R², control
-
-    x(0) == x0
-    x(tf_fixed) == xf
-
-    P = x₁(t)   
-    ex = x₂(t)  
-    ey = x₃(t)  
-    L = x₄(t)   
-
-    ur = u₁(t)
-    ut = u₂(t)
-
-    w = 1 + ex * cos(L) + ey * sin(L)
-    sqrt_p_mu = sqrt(P / μ)
-    sqrt_mu_p = sqrt(μ / P)
-
-    dP = 2 * P * sqrt_p_mu * ut
-    dex = sqrt_p_mu * (sin(L) * ur + ((w + 1) * cos(L) + ex) * ut / w)
-    dey = sqrt_p_mu * (-cos(L) * ur + ((w + 1) * sin(L) + ey) * ut / w)
-    dL = sqrt_mu_p * (w / P)^2
-
-    ẋ(t) == [dP, dex, dey, dL]
-
-    u₁(t)^2 + u₂(t)^2 ≤ ε^2
-    x₁(t) ≥ 100.0
-
-    ∫(u₁(t)^2 + u₂(t)^2) → min  # Fonction objectif simplifiée
+function min_conso()
+    @def ocp begin
+        t ∈ [0, tf], time
+        x = (P, ex, ey, hx, hy, L) ∈ R⁶, state
+        u ∈ R³, control
+        x(0) == x0
+        x[1:5](tf) == xf[1:5]
+        mass = mass0 - β * T * t
+        u_norm = sqrt(u₁(t)^2 + u₂(t)^2 + u₃(t)^2)
+        # Dynamic
+        ẋ(t) == F0(x(t)) + T / mass * (u₁(t) * F1(x(t)) + u₂(t) * F2(x(t)) + u₃(t) * F3(x(t)))
+        1e-3 ≤ u_norm^2 ≤ 1
+        u_g = max(1e-10, 1 - u_norm)
+        # Regularization with logarithmic barrier
+        ∫(u_norm - ε * (log(u_norm) + log(u_g))) → min
+    end
+    return ocp
 end
 
-# ===================== Résolution NLP =====================
-nlp_sol = OptimalControl.solve(ocp; init=nlp_init, grid_size=60, print_level=1)
-plot(nlp_sol, vars=:x, title="Éléments équinoctiaux 2D")
+
+
+
+ocp = min_conso()
+nlp_sol = solve(ocp; init=nlp_init, grid_size=500)
+plot(nlp_sol; control=:norm, size=(800, 300), layout=:group)
+
