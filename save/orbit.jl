@@ -180,8 +180,8 @@ tf, p0 = init[Tmax]
 p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 ξ = [tf; p0]; # Initial guess
 jshoot(ξ) = ForwardDiff.jacobian(shoot, ξ)
-shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
-jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
+shoot!(s, ξ) = (s[:]=shoot(ξ); nothing)
+jshoot!(js, ξ) = (js[:]=jshoot(ξ); nothing)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true);
 println(bvp_sol);
 
