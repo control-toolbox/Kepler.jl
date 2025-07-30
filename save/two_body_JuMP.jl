@@ -3,8 +3,7 @@ using Ipopt
 using Plots
 using LinearAlgebra
 
-# ===================== Données du problème =====================
-Tmax = 40                                  # Maximum thrust in Newtons
+Tmax = 60                                  # Maximum thrust in Newtons
 cTmax = 3600^2 / 1e6; T = Tmax * cTmax     # Conversion from Newtons to kg x Mm / h²
 mass0 = 1500                               # Initial mass of the spacecraft
 β = 1.42e-02                               # Engine specific impulsion
@@ -16,7 +15,7 @@ L0 = π                                     # Initial longitude
 Pf = 42.165                                # Final semilatus rectum
 exf, eyf = 0, 0                            # Final eccentricity
 hxf, hyf = 0, 0                            # Final ascending node and inclination
-ε = 1e-5                                   # Regularization parameter for logarithmic barrier
+ε = 1e-1                                   # Regularization parameter for logarithmic barrier
 tf = 20
 
 #1 reduire epsilon 
