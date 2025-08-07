@@ -128,7 +128,7 @@ Lf = 3π                                      # Estimation of final longitude
 x0 = [P0, ex0, ey0, hx0, hy0, L0]            # Initial state
 xf = [Pf, exf, eyf, hxf, hyf, Lf]            # Final state
 x(t) = x0 + (xf - x0) * t / tf               # Linear interpolation
-u = [0.1, 0.5, 0.]                        # Initial guess for the control
+u = [0.1, 0.5, 0.]                           # Initial guess for the control
 nlp_init = (state=x, control=u, variable=tf) # Initial guess for the NLP
 
 ocp = @def begin
@@ -160,7 +160,7 @@ plot(nlp_sol)
 ## Shooting (1/2), Tmax = 60 Newtons
 
 ```@example main
-function ur(x, p, tf) # Regular maximising control 
+function ur(t, x, p, tf) # Regular maximising control 
     H1 = p' * F1(x)
     H2 = p' * F2(x)
     H3 = p' * F3(x)
