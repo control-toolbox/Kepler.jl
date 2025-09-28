@@ -190,12 +190,12 @@ Number of inequality constraint evaluations          = 35
 Number of equality constraint Jacobian evaluations   = 24
 Number of inequality constraint Jacobian evaluations = 24
 Number of Lagrangian Hessian evaluations             = 23
-Total seconds in IPOPT                               = 4.727
+Total seconds in IPOPT                               = 4.517
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = variable(nlp_sol)
 p  = costate(nlp_sol)
 p0 = p(0)
-plot(nlp_sol)</code></pre><img src="index-1bda566c.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-1c427c50.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -223,15 +223,15 @@ shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
 jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.416162e+00     0.000000e+00         6.472851
-     2     7.695113e-02     5.736564e-05        29.623542
-     3     1.727077e-02     1.711084e-05         0.007842
-     4     3.809695e-03     5.434911e-07         0.019729
-     5     9.728789e-05     9.728304e-09         0.012666
-     6     5.922661e-05     1.085583e-10         0.007658
-     7     5.786130e-06     3.601035e-12         0.010241
-     8     3.130270e-08     4.488488e-14         0.010575
-     9     2.178950e-10     1.382101e-18         0.010329
+     1     1.416162e+00     0.000000e+00         5.954006
+     2     7.695113e-02     5.736564e-05        27.470271
+     3     1.727077e-02     1.711084e-05         0.007415
+     4     3.809695e-03     5.434911e-07         0.017990
+     5     9.728789e-05     9.728304e-09         0.011624
+     6     5.922661e-05     1.085583e-10         0.007143
+     7     5.786130e-06     3.601035e-12         0.009413
+     8     3.130270e-08     4.488488e-14         0.009251
+     9     2.178950e-10     1.382101e-18         0.009272
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [14.796431325861663, -0.016170953751230413, -0.9051271580757697, -0.3306423479361639, -0.09646507427591802, 0.035163913890055465, 0.24620510621144945]
@@ -239,7 +239,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 36.175478 seconds
+ * Total time: 33.496417 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -262,21 +262,21 @@ p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.073121e+00     0.000000e+00         4.653261
-     2     1.431634e-01     1.222058e+01        16.918359
-     3     1.090164e-01     1.104763e+01         0.425682
-     4     1.848524e-02     2.972697e+00         0.440761
-     5     1.996556e-02     4.469494e-01         0.410308
-     6     8.609313e-03     2.182014e-02         0.783541
-     7     2.826553e-03     2.618818e-03         0.489972
-     8     1.241996e-03     7.992737e-05         0.479518
-     9     1.556115e-03     6.608209e-05         0.434355
-    10     7.600936e-05     2.812075e-05         0.409447
-    11     4.207318e-05     1.773916e-07         0.413337
-    12     7.677904e-06     3.852982e-07         0.423584
-    13     5.384794e-07     7.246546e-09         0.430977
-    14     5.893237e-08     4.735934e-11         0.417123
-    15     1.937032e-09     4.666954e-13         0.911741
+     1     1.073121e+00     0.000000e+00         4.235169
+     2     1.431634e-01     1.222058e+01        15.834386
+     3     1.090164e-01     1.104763e+01         0.400933
+     4     1.848524e-02     2.972697e+00         0.373199
+     5     1.996556e-02     4.469494e-01         0.769861
+     6     8.609313e-03     2.182014e-02         0.387206
+     7     2.826553e-03     2.618818e-03         0.467554
+     8     1.241996e-03     7.992737e-05         0.428141
+     9     1.556115e-03     6.608209e-05         0.382765
+    10     7.600936e-05     2.812075e-05         0.362859
+    11     4.207318e-05     1.773916e-07         0.377506
+    12     7.677904e-06     3.852982e-07         0.366935
+    13     5.384794e-07     7.246546e-09         0.373166
+    14     5.893237e-08     4.735934e-11         0.383466
+    15     1.937032e-09     4.666954e-13         0.758356
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
@@ -284,7 +284,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 28.042078 seconds
+ * Total time: 25.901630 seconds
  * Function Calls: 15
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
