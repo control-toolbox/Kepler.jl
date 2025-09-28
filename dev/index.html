@@ -170,17 +170,17 @@ iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
   20  1.4796879e+01 2.26e-02 3.61e-04  -4.7 2.00e-01    -  1.00e+00 1.00e+00h  1
   21  1.4796618e+01 6.50e-05 8.32e-06  -5.7 1.94e-02    -  1.00e+00 1.00e+00h  1
   22  1.4796431e+01 2.54e-08 3.90e-09 -11.0 2.54e-04    -  1.00e+00 1.00e+00h  1
-  23  1.4796431e+01 1.42e-14 6.38e-15 -11.0 1.29e-07    -  1.00e+00 1.00e+00h  1
+  23  1.4796431e+01 1.42e-14 6.66e-15 -11.0 1.29e-07    -  1.00e+00 1.00e+00h  1
 
 Number of Iterations....: 23
 
                                    (scaled)                 (unscaled)
-Objective...............:   1.4796431325861663e+01    1.4796431325861663e+01
-Dual infeasibility......:   6.3837823915946501e-15    6.3837823915946501e-15
+Objective...............:   1.4796431325861665e+01    1.4796431325861665e+01
+Dual infeasibility......:   6.6613381477509392e-15    6.6613381477509392e-15
 Constraint violation....:   1.4210854715202004e-14    1.4210854715202004e-14
 Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
-Complementarity.........:   1.0000007287831476e-11    1.0000007287831476e-11
-Overall NLP error.......:   1.0000007287831476e-11    1.0000007287831476e-11
+Complementarity.........:   1.0000007287831392e-11    1.0000007287831392e-11
+Overall NLP error.......:   1.0000007287831392e-11    1.0000007287831392e-11
 
 
 Number of objective function evaluations             = 35
@@ -190,12 +190,12 @@ Number of inequality constraint evaluations          = 35
 Number of equality constraint Jacobian evaluations   = 24
 Number of inequality constraint Jacobian evaluations = 24
 Number of Lagrangian Hessian evaluations             = 23
-Total seconds in IPOPT                               = 4.517
+Total seconds in IPOPT                               = 4.525
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = variable(nlp_sol)
 p  = costate(nlp_sol)
 p0 = p(0)
-plot(nlp_sol)</code></pre><img src="index-1c427c50.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-9a95499f.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -223,23 +223,23 @@ shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
 jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.416162e+00     0.000000e+00         5.954006
-     2     7.695113e-02     5.736564e-05        27.470271
-     3     1.727077e-02     1.711084e-05         0.007415
-     4     3.809695e-03     5.434911e-07         0.017990
-     5     9.728789e-05     9.728304e-09         0.011624
-     6     5.922661e-05     1.085583e-10         0.007143
-     7     5.786130e-06     3.601035e-12         0.009413
-     8     3.130270e-08     4.488488e-14         0.009251
-     9     2.178950e-10     1.382101e-18         0.009272
+     1     1.416162e+00     0.000000e+00         5.940058
+     2     7.695113e-02     5.736564e-05        25.112160
+     3     1.727077e-02     1.711084e-05         0.020369
+     4     3.809695e-03     5.434911e-07         0.007410
+     5     9.728789e-05     9.728304e-09         0.019287
+     6     5.922661e-05     1.085583e-10         0.012274
+     7     5.786130e-06     3.601035e-12         0.007102
+     8     3.130300e-08     4.488488e-14         0.011253
+     9     2.178595e-10     1.382060e-18         0.011090
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
- * Starting Point: [14.796431325861663, -0.016170953751230413, -0.9051271580757697, -0.3306423479361639, -0.09646507427591802, 0.035163913890055465, 0.24620510621144945]
- * Zero: [14.80036435464976, -0.01618971492139077, -0.9084889547970921, -0.3252598589824457, -0.09447217089084237, 0.034322962839314686, 0.24184432891076493]
+ * Starting Point: [14.796431325861665, -0.01617095375123034, -0.9051271580757693, -0.3306423479361646, -0.0964650742759193, 0.035163913890055666, 0.2462051062114496]
+ * Zero: [14.800364354649744, -0.016189714921390815, -0.9084889547970921, -0.32525985898244586, -0.09447217089084174, 0.03432296283931452, 0.24184432891076513]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 33.496417 seconds
+ * Total time: 31.141054 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -262,21 +262,21 @@ p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.073121e+00     0.000000e+00         4.235169
-     2     1.431634e-01     1.222058e+01        15.834386
-     3     1.090164e-01     1.104763e+01         0.400933
-     4     1.848524e-02     2.972697e+00         0.373199
-     5     1.996556e-02     4.469494e-01         0.769861
-     6     8.609313e-03     2.182014e-02         0.387206
-     7     2.826553e-03     2.618818e-03         0.467554
-     8     1.241996e-03     7.992737e-05         0.428141
-     9     1.556115e-03     6.608209e-05         0.382765
-    10     7.600936e-05     2.812075e-05         0.362859
-    11     4.207318e-05     1.773916e-07         0.377506
-    12     7.677904e-06     3.852982e-07         0.366935
-    13     5.384794e-07     7.246546e-09         0.373166
-    14     5.893237e-08     4.735934e-11         0.383466
-    15     1.937032e-09     4.666954e-13         0.758356
+     1     1.073121e+00     0.000000e+00         4.429049
+     2     1.431634e-01     1.222058e+01        15.148519
+     3     1.090164e-01     1.104763e+01         0.366471
+     4     1.848524e-02     2.972697e+00         0.362767
+     5     1.996556e-02     4.469494e-01         0.364092
+     6     8.609313e-03     2.182014e-02         0.825986
+     7     2.826553e-03     2.618818e-03         0.368207
+     8     1.241996e-03     7.992737e-05         0.405522
+     9     1.556115e-03     6.608209e-05         0.403758
+    10     7.600936e-05     2.812075e-05         0.369088
+    11     4.207318e-05     1.773916e-07         0.357815
+    12     7.677904e-06     3.852982e-07         0.363688
+    13     5.384794e-07     7.246546e-09         0.379709
+    14     5.893237e-08     4.735934e-11         0.362557
+    15     1.937032e-09     4.666954e-13         0.371293
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
@@ -284,7 +284,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 25.901630 seconds
+ * Total time: 24.878593 seconds
  * Function Calls: 15
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
@@ -324,9 +324,9 @@ Build Info:
   Official https://julialang.org/ release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
-  CPU: 4 × AMD EPYC 7763 64-Core Processor
+  CPU: 4 × Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz
   WORD_SIZE: 64
-  LLVM: libLLVM-16.0.6 (ORCJIT, znver3)
+  LLVM: libLLVM-16.0.6 (ORCJIT, icelake-server)
 Threads: 1 default, 0 interactive, 1 GC (on 4 virtual cores)
 Environment:
   JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager</code></pre></details><details><summary>A more complete overview of all dependencies and their versions is also provided.</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/Kepler.jl/Kepler.jl/docs/Manifest.toml`
