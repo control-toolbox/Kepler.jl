@@ -13,7 +13,6 @@ The Kepler.jl repo is part of the [control-toolbox ecosystem](https://github.com
 | **CI / Build** | [![Build Status](https://github.com/control-toolbox/Kepler.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/control-toolbox/Kepler.jl/actions/workflows/CI.yml?query=branch%3Amain) |
 | **Release / Version** | [![Release](https://img.shields.io/github/v/release/control-toolbox/Kepler.jl.svg)](https://github.com/control-toolbox/Kepler.jl/releases) |
 | **License** | [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/control-toolbox/Kepler.jl/blob/master/LICENSE) |
-| **Code Style / Quality** | [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/JuliaDiff/BlueStyle) [![Aqua.jl](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl) |
 
 ## About control-toolbox
 
