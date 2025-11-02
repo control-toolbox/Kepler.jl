@@ -170,17 +170,17 @@ iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
   20  1.4796879e+01 2.26e-02 3.61e-04  -4.7 2.00e-01    -  1.00e+00 1.00e+00h  1
   21  1.4796618e+01 6.50e-05 8.32e-06  -5.7 1.94e-02    -  1.00e+00 1.00e+00h  1
   22  1.4796431e+01 2.54e-08 3.90e-09 -11.0 2.54e-04    -  1.00e+00 1.00e+00h  1
-  23  1.4796431e+01 1.42e-14 6.38e-15 -11.0 1.29e-07    -  1.00e+00 1.00e+00h  1
+  23  1.4796431e+01 1.42e-14 6.66e-15 -11.0 1.29e-07    -  1.00e+00 1.00e+00h  1
 
 Number of Iterations....: 23
 
                                    (scaled)                 (unscaled)
-Objective...............:   1.4796431325861663e+01    1.4796431325861663e+01
-Dual infeasibility......:   6.3837823915946501e-15    6.3837823915946501e-15
+Objective...............:   1.4796431325861665e+01    1.4796431325861665e+01
+Dual infeasibility......:   6.6613381477509392e-15    6.6613381477509392e-15
 Constraint violation....:   1.4210854715202004e-14    1.4210854715202004e-14
 Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
-Complementarity.........:   1.0000007287831476e-11    1.0000007287831476e-11
-Overall NLP error.......:   1.0000007287831476e-11    1.0000007287831476e-11
+Complementarity.........:   1.0000007287831392e-11    1.0000007287831392e-11
+Overall NLP error.......:   1.0000007287831392e-11    1.0000007287831392e-11
 
 
 Number of objective function evaluations             = 35
@@ -190,12 +190,12 @@ Number of inequality constraint evaluations          = 35
 Number of equality constraint Jacobian evaluations   = 24
 Number of inequality constraint Jacobian evaluations = 24
 Number of Lagrangian Hessian evaluations             = 23
-Total seconds in IPOPT                               = 7.111
+Total seconds in IPOPT                               = 6.510
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = variable(nlp_sol)
 p  = costate(nlp_sol)
 p0 = p(0)
-plot(nlp_sol)</code></pre><img src="index-0ecaa3ad.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-e3838c32.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -223,23 +223,23 @@ shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
 jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.416162e+00     0.000000e+00         4.582644
-     2     7.695113e-02     5.736564e-05         8.071654
-     3     1.727077e-02     1.711084e-05         0.021903
-     4     3.809695e-03     5.434911e-07         0.007769
-     5     9.728789e-05     9.728304e-09         0.008677
-     6     5.922661e-05     1.085583e-10         0.020494
-     7     5.786130e-06     3.601035e-12         0.007643
-     8     3.130278e-08     4.488488e-14         0.011093
-     9     2.177032e-10     1.382044e-18         0.009770
+     1     1.416162e+00     0.000000e+00         4.396015
+     2     7.695113e-02     5.736564e-05         7.694461
+     3     1.727077e-02     1.711084e-05         0.013032
+     4     3.809695e-03     5.434911e-07         0.025788
+     5     9.728789e-05     9.728304e-09         0.006724
+     6     5.922661e-05     1.085583e-10         0.011225
+     7     5.786130e-06     3.601035e-12         0.024688
+     8     3.130295e-08     4.488488e-14         0.006734
+     9     2.179164e-10     1.382040e-18         0.009123
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
- * Starting Point: [14.796431325861663, -0.016170953751230413, -0.9051271580757697, -0.3306423479361639, -0.09646507427591802, 0.035163913890055465, 0.24620510621144945]
- * Zero: [14.800364354649727, -0.016189714921390794, -0.9084889547970917, -0.3252598589824462, -0.09447217089084241, 0.03432296283931514, 0.2418443289107657]
+ * Starting Point: [14.796431325861665, -0.01617095375123034, -0.9051271580757693, -0.3306423479361646, -0.0964650742759193, 0.035163913890055666, 0.2462051062114496]
+ * Zero: [14.800364354649732, -0.01618971492139085, -0.908488954797092, -0.3252598589824459, -0.09447217089084162, 0.034322962839314804, 0.24184432891076535]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 12.741699 seconds
+ * Total time: 12.187831 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -262,21 +262,21 @@ p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.073121e+00     0.000000e+00         2.547518
-     2     1.431634e-01     1.222058e+01         6.384823
-     3     1.090164e-01     1.104763e+01         0.373197
-     4     1.848523e-02     2.972697e+00         0.375384
-     5     1.996556e-02     4.469494e-01         0.379216
-     6     8.609313e-03     2.182014e-02         0.379474
-     7     2.826554e-03     2.618819e-03         0.390019
-     8     1.241995e-03     7.992756e-05         0.879458
-     9     1.556111e-03     6.608195e-05         0.432462
-    10     7.600928e-05     2.812065e-05         0.447963
-    11     4.207310e-05     1.773916e-07         0.411263
-    12     7.677649e-06     3.852908e-07         0.367476
-    13     5.416514e-07     7.245480e-09         0.377520
-    14     5.953690e-08     4.719601e-11         0.361764
-    15     3.348617e-09     4.449163e-13         0.378938
+     1     1.073121e+00     0.000000e+00         2.474654
+     2     1.431634e-01     1.222058e+01         6.326362
+     3     1.090164e-01     1.104763e+01         0.367034
+     4     1.848523e-02     2.972697e+00         0.342514
+     5     1.996556e-02     4.469494e-01         0.336764
+     6     8.609313e-03     2.182014e-02         0.338457
+     7     2.826554e-03     2.618819e-03         0.344419
+     8     1.241995e-03     7.992756e-05         0.346696
+     9     1.556111e-03     6.608195e-05         0.932402
+    10     7.600928e-05     2.812065e-05         0.349195
+    11     4.207310e-05     1.773916e-07         0.391976
+    12     7.677649e-06     3.852908e-07         0.397071
+    13     5.416514e-07     7.245480e-09         0.348114
+    14     5.953690e-08     4.719601e-11         0.330886
+    15     3.348617e-09     4.449163e-13         0.357151
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
@@ -284,7 +284,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 14.486540 seconds
+ * Total time: 13.983757 seconds
  * Function Calls: 15
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
@@ -321,16 +321,16 @@ Build Info:
   Official https://julialang.org release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
-  CPU: 4 × AMD EPYC 7763 64-Core Processor
+  CPU: 4 × Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz
   WORD_SIZE: 64
-  LLVM: libLLVM-18.1.7 (ORCJIT, znver3)
+  LLVM: libLLVM-18.1.7 (ORCJIT, icelake-server)
   GC: Built with stock GC
 Threads: 1 default, 1 interactive, 1 GC (on 4 virtual cores)
 Environment:
   JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager</code></pre></details><details style="margin-bottom: 0.5em;"><summary>📦 Package status</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/Kepler.jl/Kepler.jl/docs/Project.toml`
   [e30172f5] Documenter v1.15.0
   [f6369f11] ForwardDiff v1.2.2
-  [459d104a] Kepler v0.2.3 `~/work/Kepler.jl/Kepler.jl`
+  [459d104a] Kepler v0.2.4 `~/work/Kepler.jl/Kepler.jl`
   [4854310b] MINPACK v1.3.0
   [f4238b75] NLPModelsIpopt v0.11.0
   [5f98b655] OptimalControl v1.1.6
@@ -419,7 +419,7 @@ Environment:
   [692b3bcd] JLLWrappers v1.7.1
   [682c06a0] JSON v1.2.0
   [ae98c720] Jieko v0.2.1
-  [459d104a] Kepler v0.2.3 `~/work/Kepler.jl/Kepler.jl`
+  [459d104a] Kepler v0.2.4 `~/work/Kepler.jl/Kepler.jl`
   [ba0b0d4f] Krylov v0.10.2
   [b964fa9f] LaTeXStrings v1.4.0
   [23fbe1c1] Latexify v0.16.10
@@ -510,7 +510,7 @@ Environment:
   [05181044] RelocatableFolders v1.0.1
   [ae029012] Requires v1.3.1
   [37e2e3b7] ReverseDiff v1.16.1
-  [7e49a35a] RuntimeGeneratedFunctions v0.5.15
+  [7e49a35a] RuntimeGeneratedFunctions v0.5.16
   [94e857df] SIMDTypes v0.1.0
   [0bca4576] SciMLBase v2.124.0
   [19f34311] SciMLJacobianOperators v0.1.11
@@ -527,7 +527,7 @@ Environment:
   [ff4d7338] SolverCore v0.3.8
   [a2af1166] SortingAlgorithms v1.2.2
   [9f842d2f] SparseConnectivityTracer v1.1.2
-  [0a514795] SparseMatrixColorings v0.4.22
+  [0a514795] SparseMatrixColorings v0.4.23
   [276daf66] SpecialFunctions v2.6.1
   [860ef19b] StableRNGs v1.0.3
   [aedffcd0] Static v1.3.1
@@ -693,4 +693,4 @@ Environment:
   [8e850b90] libblastrampoline_jll v5.15.0+0
   [8e850ede] nghttp2_jll v1.64.0+1
   [3f19e933] p7zip_jll v17.5.0+2
-Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.15.0 on <span class="colophon-date" title="Friday 31 October 2025 10:56">Friday 31 October 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.15.0 on <span class="colophon-date" title="Sunday 2 November 2025 13:17">Sunday 2 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
