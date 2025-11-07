@@ -170,17 +170,17 @@ iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
   20  1.4796879e+01 2.26e-02 3.61e-04  -4.7 2.00e-01    -  1.00e+00 1.00e+00h  1
   21  1.4796618e+01 6.50e-05 8.32e-06  -5.7 1.94e-02    -  1.00e+00 1.00e+00h  1
   22  1.4796431e+01 2.54e-08 3.90e-09 -11.0 2.54e-04    -  1.00e+00 1.00e+00h  1
-  23  1.4796431e+01 1.42e-14 6.66e-15 -11.0 1.29e-07    -  1.00e+00 1.00e+00h  1
+  23  1.4796431e+01 1.42e-14 6.38e-15 -11.0 1.29e-07    -  1.00e+00 1.00e+00h  1
 
 Number of Iterations....: 23
 
                                    (scaled)                 (unscaled)
-Objective...............:   1.4796431325861665e+01    1.4796431325861665e+01
-Dual infeasibility......:   6.6613381477509392e-15    6.6613381477509392e-15
+Objective...............:   1.4796431325861663e+01    1.4796431325861663e+01
+Dual infeasibility......:   6.3837823915946501e-15    6.3837823915946501e-15
 Constraint violation....:   1.4210854715202004e-14    1.4210854715202004e-14
 Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
-Complementarity.........:   1.0000007287831392e-11    1.0000007287831392e-11
-Overall NLP error.......:   1.0000007287831392e-11    1.0000007287831392e-11
+Complementarity.........:   1.0000007287831476e-11    1.0000007287831476e-11
+Overall NLP error.......:   1.0000007287831476e-11    1.0000007287831476e-11
 
 
 Number of objective function evaluations             = 35
@@ -190,12 +190,12 @@ Number of inequality constraint evaluations          = 35
 Number of equality constraint Jacobian evaluations   = 24
 Number of inequality constraint Jacobian evaluations = 24
 Number of Lagrangian Hessian evaluations             = 23
-Total seconds in IPOPT                               = 6.510
+Total seconds in IPOPT                               = 7.050
 
 EXIT: Optimal Solution Found.</code></pre><pre><code class="language-julia hljs">tf = variable(nlp_sol)
 p  = costate(nlp_sol)
 p0 = p(0)
-plot(nlp_sol)</code></pre><img src="index-e3838c32.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
+plot(nlp_sol)</code></pre><img src="index-fbda4584.svg" alt="Example block output"/><h2 id="Shooting-(1/2),-Tmax-60-Newtons"><a class="docs-heading-anchor" href="#Shooting-(1/2),-Tmax-60-Newtons">Shooting (1/2), Tmax = 60 Newtons</a><a id="Shooting-(1/2),-Tmax-60-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(1/2),-Tmax-60-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">function ur(t, x, p, tf) # Regular maximising control
     H1 = p&#39; * F1(x)
     H2 = p&#39; * F2(x)
     H3 = p&#39; * F3(x)
@@ -223,23 +223,23 @@ shoot!(s, ξ) = (s[:] = shoot(ξ); nothing)
 jshoot!(js, ξ) = (js[:] = jshoot(ξ); nothing)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.416162e+00     0.000000e+00         4.396015
-     2     7.695113e-02     5.736564e-05         7.694461
-     3     1.727077e-02     1.711084e-05         0.013032
-     4     3.809695e-03     5.434911e-07         0.025788
-     5     9.728789e-05     9.728304e-09         0.006724
-     6     5.922661e-05     1.085583e-10         0.011225
-     7     5.786130e-06     3.601035e-12         0.024688
-     8     3.130295e-08     4.488488e-14         0.006734
-     9     2.179164e-10     1.382040e-18         0.009123
+     1     1.416162e+00     0.000000e+00         4.470820
+     2     7.695113e-02     5.736564e-05         7.384038
+     3     1.727077e-02     1.711084e-05         0.007549
+     4     3.809695e-03     5.434911e-07         0.018709
+     5     9.728789e-05     9.728304e-09         0.010395
+     6     5.922661e-05     1.085583e-10         0.007304
+     7     5.786130e-06     3.601035e-12         0.009347
+     8     3.130278e-08     4.488488e-14         0.009320
+     9     2.177032e-10     1.382044e-18         0.009266
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
- * Starting Point: [14.796431325861665, -0.01617095375123034, -0.9051271580757693, -0.3306423479361646, -0.0964650742759193, 0.035163913890055666, 0.2462051062114496]
- * Zero: [14.800364354649732, -0.01618971492139085, -0.908488954797092, -0.3252598589824459, -0.09447217089084162, 0.034322962839314804, 0.24184432891076535]
+ * Starting Point: [14.796431325861663, -0.016170953751230413, -0.9051271580757697, -0.3306423479361639, -0.09646507427591802, 0.035163913890055465, 0.24620510621144945]
+ * Zero: [14.800364354649727, -0.016189714921390794, -0.9084889547970917, -0.3252598589824462, -0.09447217089084241, 0.03432296283931514, 0.2418443289107657]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 12.187831 seconds
+ * Total time: 11.926786 seconds
  * Function Calls: 9
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Shooting-(2/2),-Tmax-0.7-Newtons"><a class="docs-heading-anchor" href="#Shooting-(2/2),-Tmax-0.7-Newtons">Shooting (2/2), Tmax = 0.7 Newtons</a><a id="Shooting-(2/2),-Tmax-0.7-Newtons-1"></a><a class="docs-heading-anchor-permalink" href="#Shooting-(2/2),-Tmax-0.7-Newtons" title="Permalink"></a></h2><pre><code class="language-julia hljs">hr = (t, x, p) -&gt; begin # Regular maximised Hamiltonian (more efficient)
     H0 = p&#39; * F0(x)
@@ -262,21 +262,21 @@ p0 = p0 / norm(p0) # Normalization |p0|=1 for free final time
 
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true); println(bvp_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     1.073121e+00     0.000000e+00         2.474654
-     2     1.431634e-01     1.222058e+01         6.326362
-     3     1.090164e-01     1.104763e+01         0.367034
-     4     1.848523e-02     2.972697e+00         0.342514
-     5     1.996556e-02     4.469494e-01         0.336764
-     6     8.609313e-03     2.182014e-02         0.338457
-     7     2.826554e-03     2.618819e-03         0.344419
-     8     1.241995e-03     7.992756e-05         0.346696
-     9     1.556111e-03     6.608195e-05         0.932402
-    10     7.600928e-05     2.812065e-05         0.349195
-    11     4.207310e-05     1.773916e-07         0.391976
-    12     7.677649e-06     3.852908e-07         0.397071
-    13     5.416514e-07     7.245480e-09         0.348114
-    14     5.953690e-08     4.719601e-11         0.330886
-    15     3.348617e-09     4.449163e-13         0.357151
+     1     1.073121e+00     0.000000e+00         2.497987
+     2     1.431634e-01     1.222058e+01         6.195808
+     3     1.090164e-01     1.104763e+01         0.403322
+     4     1.848523e-02     2.972697e+00         0.367122
+     5     1.996556e-02     4.469494e-01         0.400718
+     6     8.609313e-03     2.182014e-02         0.867649
+     7     2.826554e-03     2.618819e-03         0.444897
+     8     1.241995e-03     7.992756e-05         0.437512
+     9     1.556111e-03     6.608195e-05         0.416001
+    10     7.600928e-05     2.812065e-05         0.380309
+    11     4.207310e-05     1.773916e-07         0.352306
+    12     7.677649e-06     3.852908e-07         0.369129
+    13     5.416514e-07     7.245480e-09         0.370049
+    14     5.953690e-08     4.719601e-11         0.377270
+    15     3.348617e-09     4.449163e-13         0.895752
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [1210.0, 0.06881811251625697, 0.13504139789537645, -0.0029863026489984875, -0.9884150724670144, 0.007167346236588738, 0.001801085395597836]
@@ -284,7 +284,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 13.983757 seconds
+ * Total time: 14.775895 seconds
  * Function Calls: 15
  * Jacobian Calls (df/dx): 1</code></pre><h2 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h2><pre><code class="language-julia hljs">tf = bvp_sol.x[1]
 p0 = bvp_sol.x[2:end]
@@ -321,9 +321,9 @@ Build Info:
   Official https://julialang.org release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
-  CPU: 4 × Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz
+  CPU: 4 × AMD EPYC 7763 64-Core Processor
   WORD_SIZE: 64
-  LLVM: libLLVM-18.1.7 (ORCJIT, icelake-server)
+  LLVM: libLLVM-18.1.7 (ORCJIT, znver3)
   GC: Built with stock GC
 Threads: 1 default, 1 interactive, 1 GC (on 4 virtual cores)
 Environment:
@@ -349,7 +349,7 @@ Environment:
   [13072b0f] AxisAlgorithms v1.1.0
   [d1d4a3ce] BitFlags v0.1.9
   [62783981] BitTwiddlingConvenienceFunctions v0.1.6
-  [70df07ce] BracketingNonlinearSolve v1.5.0
+  [70df07ce] BracketingNonlinearSolve v1.6.0
   [2a0fbf3d] CPUSummary v0.2.7
 ⌃ [54762871] CTBase v0.16.2
   [790bbbee] CTDirect v0.17.4
@@ -374,7 +374,7 @@ Environment:
   [d38c429a] Contour v0.6.3
   [adafc99b] CpuId v0.3.1
   [9a962f9c] DataAPI v1.16.0
-  [864edb3b] DataStructures v0.19.1
+  [864edb3b] DataStructures v0.19.3
   [8bb1440f] DelimitedFiles v1.9.1
   [2b5f629d] DiffEqBase v6.190.2
   [163ba53b] DiffResults v1.1.0
@@ -394,7 +394,7 @@ Environment:
   [9aa1b823] FastClosures v0.3.2
   [442a2c76] FastGaussQuadrature v1.1.0
   [a4df4552] FastPower v1.2.0
-  [1a297f60] FillArrays v1.14.0
+  [1a297f60] FillArrays v1.15.0
   [6a86dc24] FiniteDiff v2.29.0
   [53c48c17] FixedPointNumbers v0.8.5
   [1fa38f19] Format v1.3.7
@@ -440,7 +440,7 @@ Environment:
   [d0879d2d] MarkdownAST v0.1.2
   [bb5d69b7] MaybeInplace v0.1.4
   [739be429] MbedTLS v1.1.9
-  [442fdcdd] Measures v0.3.2
+  [442fdcdd] Measures v0.3.3
   [e1d29d7a] Missings v1.2.0
   [2e0e35c7] Moshi v0.3.7
   [46d2c3a1] MuladdMacro v0.2.4
@@ -450,10 +450,10 @@ Environment:
   [d41bc354] NLSolversBase v7.10.0
   [77ba4419] NaNMath v1.1.3
   [8913a72c] NonlinearSolve v4.12.0
-  [be0214bd] NonlinearSolveBase v2.0.0
-  [5959db7a] NonlinearSolveFirstOrder v1.9.0
-  [9a2c21bd] NonlinearSolveQuasiNewton v1.10.0
-  [26075421] NonlinearSolveSpectralMethods v1.5.0
+  [be0214bd] NonlinearSolveBase v2.2.0
+  [5959db7a] NonlinearSolveFirstOrder v1.10.0
+  [9a2c21bd] NonlinearSolveQuasiNewton v1.11.0
+  [26075421] NonlinearSolveSpectralMethods v1.6.0
   [6fe1bfb0] OffsetArrays v1.17.0
   [4d8831e6] OpenSSL v1.6.0
   [5f98b655] OptimalControl v1.1.6
@@ -492,7 +492,7 @@ Environment:
   [d96e819e] Parameters v0.12.3
   [69de0a69] Parsers v2.8.3
   [ccf2f8ad] PlotThemes v3.3.0
-  [995b91a9] PlotUtils v1.4.3
+  [995b91a9] PlotUtils v1.4.4
   [91a5bcdd] Plots v1.41.1
   [f517fe37] Polyester v0.7.18
   [1d0040c9] PolyesterWeave v0.2.2
@@ -514,8 +514,8 @@ Environment:
   [94e857df] SIMDTypes v0.1.0
   [0bca4576] SciMLBase v2.124.0
   [19f34311] SciMLJacobianOperators v0.1.11
-  [a6db7da4] SciMLLogging v1.3.1
-  [c0aeaf25] SciMLOperators v1.9.0
+  [a6db7da4] SciMLLogging v1.4.0
+  [c0aeaf25] SciMLOperators v1.10.0
   [431bcebd] SciMLPublic v1.0.0
   [53ae85a6] SciMLStructures v1.7.0
   [6c6a2e73] Scratch v1.3.0
@@ -693,4 +693,4 @@ Environment:
   [8e850b90] libblastrampoline_jll v5.15.0+0
   [8e850ede] nghttp2_jll v1.64.0+1
   [3f19e933] p7zip_jll v17.5.0+2
-Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.15.0 on <span class="colophon-date" title="Sunday 2 November 2025 13:17">Sunday 2 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`</code></pre></details><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><section class="footnotes is-size-7"><ul><li class="footnote" id="footnote-1"><a class="tag is-link" href="#citeref-1">1</a>Bonnard, B.; Caillau, J.-B.; Trélat, E. Geometric optimal control of elliptic Keplerian orbits.  <em>Discrete Contin. Dyn. Syst. Ser. B</em> <strong>5</strong> (2005), no. 4, 929-956.</li><li class="footnote" id="footnote-2"><a class="tag is-link" href="#citeref-2">2</a>Caillau, J.-B.; Gergaud, J.; Noailles, J. 3D Geosynchronous Transfer of a Satellite: continuation on the Thrust. <em>J. Optim. Theory Appl.</em> <strong>118</strong> (2003), no. 3, 541-565.</li></ul></section></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.15.0 on <span class="colophon-date" title="Friday 7 November 2025 09:06">Friday 7 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
