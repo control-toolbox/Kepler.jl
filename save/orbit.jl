@@ -197,7 +197,7 @@ hr = (t, x, p) -> begin # Regular maximised Hamiltonian (more efficient)
     return h
 end
 
-hr = Hamiltonian(hr; autonomous=false)
+hr = OptimalControl.Hamiltonian(hr; autonomous=false)
 fr = Flow(hr) # Regular flow (again)
 bvp_sol = fsolve(shoot!, jshoot!, ξ; show_trace=true);
 println(bvp_sol);

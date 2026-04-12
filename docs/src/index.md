@@ -189,7 +189,7 @@ hr = (t, x, p) -> begin # Regular maximised Hamiltonian (more efficient...
     return h
 end
 
-hr = Hamiltonian(hr; autonomous=false)
+hr = OptimalControl.Hamiltonian(hr; autonomous=false)
 fr = Flow(hr) # Regular flow (again)
 
 Tmax = 0.7                                 # Maximum thrust (Newtons)
