@@ -36,4 +36,8 @@ makedocs(;
     checkdocs=:none,
 )
 
-deploydocs(; repo=repo_url * ".git", devbranch="main")
+# PR previews are opt-in: CTActions sets DOCUMENTER_PUSH_PREVIEW to "true" on a pull request
+# carrying the `documentation push preview` label.
+push_preview = get(ENV, "DOCUMENTER_PUSH_PREVIEW", "false") == "true"
+
+deploydocs(; repo=repo_url * ".git", devbranch="main", push_preview=push_preview)
