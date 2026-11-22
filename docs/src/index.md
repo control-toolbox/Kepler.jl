@@ -28,7 +28,7 @@ check [^1] and [^2]):
   \dot{m} = -\beta T_{\max}|u|,
 \end{cases}
 ```
-where ``q \in \R^3`` is the position of the spacecraft, ``m`` its mass and ``u`` the thrust
+where ``q \in \mathbf{R}^3`` is the position of the spacecraft, ``m`` its mass and ``u`` the thrust
 direction, normalised by the maximum thrust ``T_{\max}``.
 
 Fixed initial and final Keplerian orbits (free final longitude). Instead of ``(q, \dot{q})``,
